@@ -16,6 +16,10 @@ module.exports = {
     query = query.trim();
 
     const a = await anilist.searchAnime(query);
+    if (!a) {
+      message.channel.send(`I was unable to find any anime called *${query}*`);
+      return;
+    }
     const kt = await kitsu.searchAnime(a.title.userPreferred);
 
     const anime = new Anime(
