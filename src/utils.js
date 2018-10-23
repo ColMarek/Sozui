@@ -8,12 +8,14 @@ module.exports = {
      */
     isValidMessage(message) {
       if (
-        message.author.bot ||
-        !message.content.startsWith(prefix) && !message.channel.type === "dm"
+        !message.content.startsWith(prefix) &&
+        !message.channel.type === "dm"
       ) {
         return false;
+      } else if (message.author.bot) {
+        return false;
       } else if (!message.content.startsWith(prefix)) {
-        return true;
+        return false;
       } else {
         return true;
       }
