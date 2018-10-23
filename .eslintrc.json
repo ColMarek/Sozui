@@ -1,0 +1,33 @@
+{
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
+  "rules": {
+    "indent": ["error", 2],
+    "linebreak-style": ["error", "windows"],
+    "quotes": ["error", "double"],
+    "semi": ["error", "always"],
+    "no-empty": "error",
+    "no-extra-parens": "error",
+    "curly": "error",
+    "eqeqeq": "error",
+    "no-empty-pattern": "error",
+    "no-multi-spaces": "error",
+    "capitalized-comments": "error",
+    "comma-spacing": "error",
+    "eol-last": "error",
+    "no-multiple-empty-lines": "error",
+    "spaced-comment": "error",
+    "arrow-spacing": "error",
+    "arrow-body-style": ["error", "as-needed"],
+    "arrow-parens": ["error", "as-needed"],
+    "no-var": "error",
+    "prefer-arrow-callback": "error",
+    "prefer-const": "error"
+  }
+}
