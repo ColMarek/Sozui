@@ -36,6 +36,7 @@ client.on("message", async message => {
    and isn't a DM (DM doesnt need the prefix) */
   if (
     message.author.bot ||
+    !message.content.startsWith(prefix) ||
     !message.content.startsWith(prefix) && !message.channel.type === "dm"
   ) {
     return;
@@ -79,7 +80,7 @@ client.on("message", async message => {
     let reply = `You didn't provide any arguments, ${message.author}!`;
 
     if (command.usage) {
-      reply += `\nThe proper usage would be: \`${prefix}${command.name} ${
+      reply += `\nThe proper usage would be: \`${prefix} ${command.name} ${
         command.usage
       }\``;
     }
