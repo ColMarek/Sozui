@@ -1,3 +1,4 @@
+const winston = require("winston");
 const anilist = require("./../core/anilist");
 const kitsu = require("./../core/kitsu");
 const Anime = require("./../models/Anime");
@@ -15,12 +16,22 @@ module.exports = {
     });
     query = query.trim();
 
+    winston.debug(`Searching for '${query}'`);
+
     const a = await anilist.searchAnime(query);
     if (!a) {
+      winston.debug(`Unable to find '${query}' on Anilist`);
       message.channel.send(`I was unable to find any anime called *${query}*`);
       return;
     }
+    winston.debug(`Found '${query}' on Anilist`);
+
     const kt = await kitsu.searchAnime(a.title.userPreferred);
+    if (kt) {
+      winston.debug(`Found '${query}' on Kitsu`);
+    } else {
+      winston.debug(`Unable to find '${query}' on Kitsu`);
+    }
 
     const anime = new Anime(
       a.title.userPreferred,
@@ -78,5 +89,6 @@ module.exports = {
         fields
       }
     });
+    winston.debug(`Sent reply for '${query}'`);
   }
 };
