@@ -9,10 +9,11 @@ module.exports = {
     isValidMessage(message) {
       if (
         message.author.bot ||
-        !message.content.startsWith(prefix) ||
         !message.content.startsWith(prefix) && !message.channel.type === "dm"
       ) {
         return false;
+      } else if (!message.content.startsWith(prefix)) {
+        return true;
       } else {
         return true;
       }
