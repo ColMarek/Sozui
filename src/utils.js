@@ -7,13 +7,13 @@ module.exports = {
      * @param {*} message Discord.js message
      */
     isValidMessage(message) {
-      if (
+      if (message.author.bot) {
+        return false;
+      } else if (
         !message.content.startsWith(prefix) &&
-        !message.channel.type === "dm"
+        message.channel.type === "dm"
       ) {
-        return false;
-      } else if (message.author.bot) {
-        return false;
+        return true;
       } else if (!message.content.startsWith(prefix)) {
         return false;
       } else {
