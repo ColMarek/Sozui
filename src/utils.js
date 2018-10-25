@@ -1,3 +1,5 @@
+const winston = require("winston");
+
 const { prefix } = require("./config");
 
 module.exports = {
@@ -62,6 +64,13 @@ module.exports = {
 
       // Check if command exists
       if (!command) {
+        winston.warn(`Unable to find command for '${commandName}'`);
+        const data = [];
+        data.push(
+          `${message.author} I could not find any command like '${commandName}'`
+        );
+        data.push(`Did you mean \`${prefix} anime ${commandName}\``);
+        message.channel.send(data);
         return;
       }
 
