@@ -2,8 +2,10 @@ const fs = require("fs");
 const winston = require("winston");
 const Discord = require("discord.js");
 
-const { botToken } = require("./config");
+const { botToken, prefix } = require("./config");
 const utils = require("./utils");
+const { generateMessageEmbed } = require("./commands/anime");
+const animeSearch = require("./core/animeSearch");
 
 // Initialize logger
 const { combine, timestamp, printf } = winston.format;
@@ -39,6 +41,20 @@ client.on("ready", () => {
  * Handle messages
  */
 client.on("message", async message => {
+  // Handle a message that searches using brackets e.g. {anime title}
+  if (!message.content.includes(prefix)) {
+    const found = message.content.match(/\{(.*?)\}/g);
+    if (found) {
+      winston.info(
+        `${message.guild ? message.guild.name + " -> " : ""}${
+          message.author.username
+        }#${message.author.discriminator}-> ${message.content}`
+      );
+      await handleBracketsSearch(found, message);
+    }
+    return;
+  }
+
   if (!utils.discord.isValidMessage(message)) {
     return;
   }
@@ -67,5 +83,24 @@ client.on("message", async message => {
     message.reply("There was an error trying to execute that command!");
   }
 });
+
+async function handleBracketsSearch(found, message) {
+  found.forEach(async query => {
+    query = query.replace("{", "");
+    query = query.replace("}", "");
+
+    const anime = await animeSearch(query);
+    if (!anime) {
+      message.channel.send(`I was unable to find any anime called *${query}*`);
+    }
+
+    const embed = generateMessageEmbed(anime);
+
+    await message.channel.send(anime.title, {
+      embed
+    });
+    winston.debug(`Sent reply for '${query}'`);
+  });
+}
 
 client.login(botToken);

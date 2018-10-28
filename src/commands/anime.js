@@ -65,5 +65,6 @@ module.exports = {
       embed
     });
     winston.debug(`Sent reply for '${query}'`);
-  }
+  },
+  generateMessageEmbed
 };

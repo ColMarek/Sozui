@@ -10,6 +10,7 @@ const Anime = require("./../models/Anime");
 async function search(query) {
   winston.debug(`Searching for '${query}'`);
 
+  // Search anilist for the anime
   const a = await anilist.searchAnime(query);
   if (!a) {
     winston.debug(`Unable to find '${query}' on Anilist`);
@@ -17,6 +18,7 @@ async function search(query) {
   }
   winston.debug(`Found '${query}' on Anilist`);
 
+  // Search kitsu for the anime
   const kt = await kitsu.searchAnime(a.title.userPreferred);
   if (kt) {
     winston.debug(`Found '${query}' on Kitsu`);
