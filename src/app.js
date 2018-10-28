@@ -3,8 +3,8 @@ const winston = require("winston");
 const Discord = require("discord.js");
 
 const { botToken, prefix } = require("./config");
-const utils = require("./utils");
-const { generateMessageEmbed } = require("./commands/anime");
+const discordUtils = require("./utils/discord");
+const { generateMiniMessageEmbed } = require("./utils/anime");
 const animeSearch = require("./core/animeSearch");
 
 // Initialize logger
@@ -55,7 +55,7 @@ client.on("message", async message => {
     return;
   }
 
-  if (!utils.discord.isValidMessage(message)) {
+  if (!discordUtils.isValidMessage(message)) {
     return;
   }
 
@@ -64,9 +64,9 @@ client.on("message", async message => {
       message.author.username
     }#${message.author.discriminator}-> ${message.content}`
   );
-  const args = utils.discord.extractArgs(message);
+  const args = discordUtils.extractArgs(message);
 
-  const command = utils.discord.validateCommand(args, client, message);
+  const command = discordUtils.validateCommand(args, client, message);
   // There was a problem with the command
   if (!command) {
     return;
@@ -94,7 +94,7 @@ async function handleBracketsSearch(found, message) {
       message.channel.send(`I was unable to find any anime called *${query}*`);
     }
 
-    const embed = generateMessageEmbed(anime);
+    const embed = generateMiniMessageEmbed(anime);
 
     await message.channel.send(anime.title, {
       embed
