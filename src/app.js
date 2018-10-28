@@ -51,8 +51,9 @@ client.on("message", async message => {
         }#${message.author.discriminator}-> ${message.content}`
       );
       await handleBracketsSearch(found, message);
+      return;
     }
-    return;
+    // return;
   }
 
   if (!discordUtils.isValidMessage(message)) {
