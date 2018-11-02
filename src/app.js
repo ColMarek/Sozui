@@ -7,6 +7,10 @@ const discordUtils = require("./utils/discord");
 const { generateMiniMessageEmbed } = require("./utils/anime");
 const animeSearch = require("./core/animeSearch");
 
+if (!fs.existsSync(__dirname + "/../logs")) {
+  fs.mkdirSync(__dirname + "/../logs");
+}
+
 // Initialize logger
 const { combine, timestamp, printf } = winston.format;
 const customFormat = printf(
@@ -15,7 +19,13 @@ const customFormat = printf(
 winston.configure({
   level: "debug",
   format: combine(timestamp(), customFormat),
-  transports: [new winston.transports.Console()]
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({
+      filename: __dirname + "/../logs/combined.log",
+      format: combine(timestamp(), customFormat)
+    })
+  ]
 });
 
 const client = new Discord.Client();
@@ -53,7 +63,6 @@ client.on("message", async message => {
       await handleBracketsSearch(found, message);
       return;
     }
-    // return;
   }
 
   if (!discordUtils.isValidMessage(message)) {
