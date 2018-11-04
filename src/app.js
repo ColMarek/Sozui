@@ -72,7 +72,7 @@ client.on("message", async message => {
   winston.info(
     `${message.guild ? message.guild.name + " -> " : ""}${
       message.author.username
-    }#${message.author.discriminator}-> ${message.content}`
+    }#${message.author.discriminator} -> ${message.content}`
   );
   const args = discordUtils.extractArgs(message);
 
