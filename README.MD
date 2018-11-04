@@ -1,5 +1,9 @@
 # Sozui
 
+[![Build Status](https://travis-ci.org/ColMarek/Sozui.svg?branch=master)](https://travis-ci.org/ColMarek/Sozui)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/17a474d963f14101b480b98fa25f8f40)](https://www.codacy.com/app/ColMarek/Sozui?utm_source=github.com&utm_medium=referral&utm_content=ColMarek/Sozui&utm_campaign=Badge_Grade)
+[![Known Vulnerabilities](https://snyk.io/test/github/ColMarek/Sozui/badge.svg?targetFile=package.json)](https://snyk.io/test/github/ColMarek/Sozui?targetFile=package.json)
+
 A Discord bot for anime.
 
 ## Commands
