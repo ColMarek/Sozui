@@ -53,7 +53,7 @@ client.on("ready", () => {
 client.on("message", async message => {
   // Handle a message that searches using brackets e.g. {anime title}
   if (!message.content.includes(prefix)) {
-    const found = message.content.match(/\{(.*?)\}/g);
+    const found = message.content.match(discordUtils.bracketsRegex);
     if (found) {
       winston.info(
         `${message.guild ? message.guild.name + " -> " : ""}${
