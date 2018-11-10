@@ -16,12 +16,12 @@ module.exports = {
         `\nYou can send \`${prefix} help [command name]\` to get info on a specific command!`
       );
 
-      await message.author.send(data, { split: true });
+      await message.channel.send(data, { split: true });
 
-      if (message.channel.type === "dm") {
-        return;
-      }
-      await message.reply("I've sent you a DM with all my commands!");
+      // if (message.channel.type === "dm") {
+      //   return;
+      // }
+      // await message.reply("I've sent you a DM with all my commands!");
 
       return;
     }
