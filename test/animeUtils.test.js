@@ -35,6 +35,11 @@ describe("anime utils", () => {
       fields.push({ name: "NSFW", value: "true", inline: false });
     }
     fields.push({
+      name: "Anilist URL",
+      value: anime.anilistUrl,
+      inline: false
+    });
+    fields.push({
       name: "MyAnimeList URL",
       value: anime.malUrl,
       inline: false
@@ -69,6 +74,11 @@ describe("anime utils", () => {
     if (anime.isAdult) {
       fields.push({ name: "NSFW", value: "true", inline: false });
     }
+    fields.push({
+      name: "Anilist URL",
+      value: anime.anilistUrl,
+      inline: false
+    });
     fields.push({
       name: "MyAnimeList URL",
       value: anime.malUrl,
