@@ -6,10 +6,20 @@
 
 A Discord bot for anime.
 
+## Usage
+
+You can search for anime by:
+
+- wrapping the anime title in curly braces e.g. `{Fullmetal Alchemist}`. This will allow you to search for multiple anime in one message.
+- using the anime command e.g. `!sozui anime Fullmetal Alchemist`.
+
 ## Commands
 
 Default prefix: `!sozui`
 
+Use `!sozui help` to view a more updated list of commands.
+
+**NB:** In a DM message, you don't need a prefix.  
 **NB:** Do not include the angle brackets `<`, `>` in the command.
 
 ### Search anime
