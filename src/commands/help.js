@@ -10,6 +10,13 @@ module.exports = {
     const { commands } = message.client;
 
     if (!args.length) {
+      data.push(
+        `You can search for anime by wrapping the anime title in curly braces e.g. \`{Fullmetal Alchemist}\` or using the _anime_ command e.g. \`${prefix} anime Fullmetal Alchemist\``
+      );
+      data.push(
+        "The curly braces will allow you to search for multiple anime in one message."
+      );
+      data.push("");
       data.push("Here's a list of all my commands:");
       data.push(commands.map(command => command.name).join(", "));
       data.push(
