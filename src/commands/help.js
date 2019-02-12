@@ -26,11 +26,6 @@ module.exports = {
 
       await message.channel.send(data, { split: true });
 
-      // if (message.channel.type === "dm") {
-      //   return;
-      // }
-      // await message.reply("I've sent you a DM with all my commands!");
-
       return;
     }
 

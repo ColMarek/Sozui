@@ -8,6 +8,7 @@ module.exports = {
   args: true,
   usage: "<anime title>",
   execute: async (message, args) => {
+    // Combine args in to a single string
     let query = "";
     args.forEach(arg => {
       query += arg;

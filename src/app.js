@@ -2,7 +2,7 @@ const fs = require("fs");
 const winston = require("winston");
 const Discord = require("discord.js");
 
-const { botToken, prefix } = require("./config");
+const { botToken } = require("./config");
 const discordUtils = require("./utils/discord");
 const { generateMiniMessageEmbed } = require("./utils/anime");
 const animeSearch = require("./core/animeSearch");
@@ -51,51 +51,46 @@ client.on("ready", () => {
  * Handle messages
  */
 client.on("message", async message => {
-  // Handle a message that searches using brackets e.g. {anime title}
-  if (!message.content.includes(prefix)) {
-    const found = message.content.match(discordUtils.bracketsRegex);
-    if (found) {
-      winston.info(
-        `${message.guild ? message.guild.name + " -> " : ""}${
-          message.author.username
-        }#${message.author.discriminator}-> ${message.content}`
-      );
-      await handleBracketsSearch(found, message);
-      return;
-    }
-  }
-
+  // Check if the message is valid
   if (!discordUtils.isValidMessage(message)) {
     return;
   }
 
   winston.info(
-    `${message.guild ? message.guild.name + " -> " : ""}${
-      message.author.username
-    }#${message.author.discriminator} -> ${message.content}`
+    `${message.guild ? message.guild.name + " -> " : ""}` +
+      `${message.author.username}#${message.author.discriminator} -> ` +
+      message.content
   );
-  const args = discordUtils.extractArgs(message);
 
-  const command = discordUtils.validateCommand(args, client, message);
-  // There was a problem with the command
-  if (!command) {
+  // Handle a message that uses brackets e.g. {anime title}
+  const found = message.content.match(discordUtils.bracketsRegex);
+  if (found) {
+    await handleBracketsSearch(found, message);
     return;
   }
 
-  try {
-    message.channel.startTyping();
-    await command.execute(message, args);
-    await message.react("✅");
-    message.channel.stopTyping(true);
-  } catch (error) {
-    message.channel.stopTyping();
-    winston.error(error);
-    message.reply("There was an error trying to execute that command!");
+  // Handle a messages that uses the prefix
+  const args = discordUtils.extractArgs(message);
+  const command = discordUtils.validateCommand(args, client, message);
+  // If the command is valid
+  if (command) {
+    try {
+      message.channel.startTyping();
+      await command.execute(message, args);
+      await message.react("✅");
+      message.channel.stopTyping(true);
+    } catch (error) {
+      message.channel.stopTyping();
+      winston.error(error);
+      message.reply("There was an error trying to execute that command!");
+    }
   }
 });
 
 async function handleBracketsSearch(found, message) {
+  // Repeat for as many strings found
   found.forEach(async query => {
+    // Remove brackets
     query = query.replace("{", "");
     query = query.replace("}", "");
 
@@ -106,9 +101,12 @@ async function handleBracketsSearch(found, message) {
 
     const embed = generateMiniMessageEmbed(anime);
 
+    message.channel.startTyping();
     await message.channel.send(anime.title, {
       embed
     });
+    await message.react("✅");
+    message.channel.stopTyping(true);
     winston.debug(`Sent reply for '${query}'`);
   });
 }

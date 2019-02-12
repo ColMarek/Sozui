@@ -2,43 +2,54 @@ const winston = require("winston");
 
 const { prefix } = require("./../config");
 
+/**
+ * Regex for matching brackets
+ * {anime title}
+ */
+const bracketsRegex = /\{(.*?)\}/g;
+
 module.exports = {
   /**
    * Checks that a message is in the valid format for
    * @param {*} message Discord.js message
    */
   isValidMessage(message) {
+    // If message is by a bot, it's not valid
     if (message.author.bot) {
       return false;
-    } else if (
-      !message.content.startsWith(prefix) &&
-      message.channel.type === "dm"
-    ) {
-      return true;
-    } else if (!message.content.startsWith(prefix)) {
-      return false;
-    } else {
+    }
+
+    // If the message is a dm, it's valid
+    if (message.channel.type === "dm") {
       return true;
     }
+
+    // If the message starts with the prefix, it's valid
+    if (message.content.startsWith(prefix)) {
+      return true;
+    }
+
+    // If the message contains text wrapped in curly braces, it's valid
+    if (message.content.match(bracketsRegex)) {
+      return true;
+    }
+
+    return false;
   },
   /**
-   * Extract arguments from a message
+   * Extract arguments from a message by splitting at spaces
    * @param {*} message Discord.js message
    */
   extractArgs(message) {
-    // Extract args from message by splitting at spaces
-    let args;
     // DMs don't need a prefix
     if (!message.content.startsWith(prefix) && message.channel.type === "dm") {
-      args = message.content.split(/ +/);
+      return message.content.split(/ +/);
     } else {
-      args = message.content
-        .slice(prefix.length)
+      return message.content
+        .slice(prefix.length) // Remove the prefix, then split at spaces.
         .trim()
         .split(/ +/);
     }
-
-    return args;
   },
   /**
    * Check that a command is valid by checking that it exists and it has arguments, if they
@@ -86,9 +97,5 @@ module.exports = {
 
     return command;
   },
-  /**
-   * Regex for matching brackets
-   * {anime title}
-   */
-  bracketsRegex: /\{(.*?)\}/g
+  bracketsRegex
 };

@@ -31,6 +31,13 @@ describe("discord utils test", () => {
       const actual = discordUtils.isValidMessage(message);
       assert.strictEqual(actual, true);
     });
+
+    it("should succed if message has brackets", () => {
+      const message = generateMessage("{title}", false, "text");
+
+      const actual = discordUtils.isValidMessage(message);
+      assert.strictEqual(actual, true);
+    });
   });
 
   describe("extract args", () => {
