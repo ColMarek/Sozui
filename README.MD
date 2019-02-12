@@ -22,16 +22,17 @@ Use `!sozui help` to view a more updated list of commands.
 **NB:** In a DM message, you don't need a prefix.  
 **NB:** Do not include the angle brackets `<`, `>` in the command.
 
-### Search anime
+### Get anime details
 
 `!sozui anime <anime title>`
 
-Example: `!sozui anime Boku no Hero`
+Example: `!sozui anime Naruto`
 
-It is also possible to search using brackets e.g. `{Boku no Hero}`.  
-You can have multiple searches in a message.
+### Get extended anime details
 
-To get extended info, use `!sozui anime-extended <anime title>` or `!sozui ae <anime title>`
+`!sozui anime-extended <anime title>`
+
+Example: `!sozui ae Naruto`
 
 ### Help
 
