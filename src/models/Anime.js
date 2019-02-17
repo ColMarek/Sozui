@@ -27,6 +27,7 @@ class Anime {
     anilistUrl,
     malId,
     kitsuUrl,
+    masteraniUrl,
     status,
     startDate,
     endDate,
@@ -42,6 +43,7 @@ class Anime {
     this.anilistUrl = anilistUrl;
     this.malUrl = "http://myanimelist.net/anime/" + malId;
     this.kitsuUrl = kitsuUrl;
+    this.masteraniUrl = masteraniUrl;
     this.status = status;
     this.startDate = startDate;
     this.endDate = endDate;

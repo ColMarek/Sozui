@@ -30,6 +30,13 @@ module.exports = {
     if (anime.kitsuUrl) {
       fields.push({ name: "Kitsu URL", value: anime.kitsuUrl, inline: false });
     }
+    if (anime.masteraniUrl) {
+      fields.push({
+        name: "Masterani URL",
+        value: anime.masteraniUrl,
+        inline: false
+      });
+    }
 
     let color = 0x0cca4a;
     if (anime.isAdult) {
@@ -64,6 +71,13 @@ module.exports = {
     });
     if (anime.kitsuUrl) {
       fields.push({ name: "Kitsu URL", value: anime.kitsuUrl, inline: false });
+    }
+    if (anime.masteraniUrl) {
+      fields.push({
+        name: "Masterani URL",
+        value: anime.masteraniUrl,
+        inline: false
+      });
     }
 
     let color = 0x0cca4a;
