@@ -12,7 +12,7 @@ module.exports = {
     if (!args.length) {
       data.push("You can search for anime by:");
       data.push(
-        " - wrapping the anime title in curly braces e.g. `{Fullmetal Alchemist}`. This will allow you to search for multiple anime in one message."
+        " - wrapping the anime title in a colon and curly braces e.g. `:{Fullmetal Alchemist}:`. This will allow you to search for multiple anime in one message."
       );
       data.push(
         ` - using the _anime_ command e.g. \`${prefix} anime Fullmetal Alchemist\``

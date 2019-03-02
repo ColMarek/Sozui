@@ -33,7 +33,7 @@ describe("discord utils test", () => {
     });
 
     it("should succed if message has brackets", () => {
-      const message = generateMessage("{title}", false, "text");
+      const message = generateMessage(":{title}:", false, "text");
 
       const actual = discordUtils.isValidMessage(message);
       assert.strictEqual(actual, true);
@@ -58,10 +58,10 @@ describe("discord utils test", () => {
 
   describe("regex", () => {
     it("should match message with brackets", () => {
-      const actual = "{anime 1} and {anime 2}".match(
+      const actual = ":{anime 1}: and :{anime 2}:".match(
         discordUtils.bracketsRegex
       );
-      assert.deepEqual(actual, ["{anime 1}", "{anime 2}"]);
+      assert.deepEqual(actual, [":{anime 1}:", ":{anime 2}:"]);
     });
   });
 });

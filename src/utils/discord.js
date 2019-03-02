@@ -6,7 +6,7 @@ const { prefix } = require("./../config");
  * Regex for matching brackets
  * {anime title}
  */
-const bracketsRegex = /\{(.*?)\}/g;
+const bracketsRegex = /:\{(.*?)\}:/g;
 
 module.exports = {
   /**

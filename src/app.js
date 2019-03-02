@@ -91,8 +91,8 @@ async function handleBracketsSearch(found, message) {
   // Repeat for as many strings found
   found.forEach(async query => {
     // Remove brackets
-    query = query.replace("{", "");
-    query = query.replace("}", "");
+    query = query.replace(":{", "");
+    query = query.replace("}:", "");
 
     const anime = await animeSearch(query);
     if (!anime) {
