@@ -33,6 +33,7 @@ describe("discord utils test", () => {
     });
 
     it("should succed if message has brackets", () => {
+      // const message = generateMessage(":{}:", false, "text");
       const message = generateMessage(":{title}:", false, "text");
 
       const actual = discordUtils.isValidMessage(message);

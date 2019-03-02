@@ -93,10 +93,16 @@ async function handleBracketsSearch(found, message) {
     // Remove brackets
     query = query.replace(":{", "");
     query = query.replace("}:", "");
+    query = query.trim();
+
+    if (query === "") {
+      return;
+    }
 
     const anime = await animeSearch(query);
     if (!anime) {
       message.channel.send(`I was unable to find any anime called *${query}*`);
+      return;
     }
 
     const embed = generateMiniMessageEmbed(anime);
