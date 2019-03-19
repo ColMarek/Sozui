@@ -10,7 +10,7 @@ async function searchAnime(title) {
   const query = `
 	query{
 		Page(page: 1, perPage: 1) {
-			media(sort: POPULARITY_DESC, type: ANIME, search:"${title}") {
+			media(sort: SEARCH_MATCH, type: ANIME, search:"${title}") {
         idMal
 				title {
 					userPreferred
