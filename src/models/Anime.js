@@ -25,7 +25,6 @@ class Anime {
     meanScore,
     anilistUrl,
     malId,
-    masteraniUrl,
     status,
     startDate,
     endDate,
@@ -40,7 +39,6 @@ class Anime {
     this.meanScore = meanScore;
     this.anilistUrl = anilistUrl;
     this.malUrl = "http://myanimelist.net/anime/" + malId;
-    this.masteraniUrl = masteraniUrl;
     this.status = status;
     this.startDate = startDate;
     this.endDate = endDate;
