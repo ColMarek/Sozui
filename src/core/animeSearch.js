@@ -1,7 +1,6 @@
 const winston = require("winston");
 
 const anilist = require("./anilist");
-const kitsu = require("./kitsu");
 const Anime = require("./../models/Anime");
 const masterani = require("./masterani");
 
@@ -19,14 +18,6 @@ async function search(query) {
   }
   winston.debug(`Found '${query}' on Anilist`);
 
-  // Search kitsu for the anime
-  const kt = await kitsu.searchAnime(a.title.userPreferred);
-  if (kt) {
-    winston.debug(`Found '${query}' on Kitsu`);
-  } else {
-    winston.debug(`Unable to find '${query}' on Kitsu`);
-  }
-
   const masteraniUrl = await masterani.searchAnime(a.title.userPreferred);
   if (masteraniUrl) {
     winston.debug(`Found '${query}' on Masterani`);
@@ -42,7 +33,6 @@ async function search(query) {
     a.meanScore,
     a.siteUrl,
     a.idMal,
-    kt,
     masteraniUrl,
     a.status,
     `${a.startDate.day}-${a.startDate.month}-${a.startDate.year}`,

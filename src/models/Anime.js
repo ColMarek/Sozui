@@ -10,7 +10,6 @@ class Anime {
    * @param {Number} meanScore Mean score on Anilist
    * @param {String} anilistUrl Url on Anilist
    * @param {String} malId Id on MyAnimeList
-   * @param {String} kitsuUrl Url on Kitsu
    * @param {String} status Current releasing status
    * @param {String} startDate First official release date of the anime
    * @param {String} endDate Last official release date of the anime
@@ -26,7 +25,6 @@ class Anime {
     meanScore,
     anilistUrl,
     malId,
-    kitsuUrl,
     masteraniUrl,
     status,
     startDate,
@@ -42,7 +40,6 @@ class Anime {
     this.meanScore = meanScore;
     this.anilistUrl = anilistUrl;
     this.malUrl = "http://myanimelist.net/anime/" + malId;
-    this.kitsuUrl = kitsuUrl;
     this.masteraniUrl = masteraniUrl;
     this.status = status;
     this.startDate = startDate;
