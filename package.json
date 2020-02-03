@@ -11,7 +11,7 @@
     "dev": "nodemon ./src/app.js",
     "test": "mocha",
     "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "prepublish": "yarn run snyk-protect"
   },
   "dependencies": {
     "axios": "^0.18.1",
@@ -19,7 +19,7 @@
     "dotenv": "^6.1.0",
     "striptags": "^3.1.1",
     "winston": "^3.1.0",
-    "snyk": "^1.217.0"
+    "snyk": "^1.290.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
