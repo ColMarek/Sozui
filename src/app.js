@@ -61,13 +61,13 @@ client.on("message", async message => {
   // Handle :{{anime title}}:
   const foundExtended = message.content.match(discordUtils.animeExtendedRegex);
   if (foundExtended) {
-    await handleExtendedBracketsSearch(foundExtended, message);
+    await handleBracketsSearch(foundExtended, message, true);
     return;
   }
   // Handle :{anime title}:
   const found = message.content.match(discordUtils.animeRegex);
   if (found) {
-    await handleBracketsSearch(found, message);
+    await handleBracketsSearch(found, message, false);
     return;
   }
 
@@ -89,12 +89,17 @@ client.on("message", async message => {
   }
 });
 
-async function handleBracketsSearch(found, message) {
+async function handleBracketsSearch(found, message, extended) {
   // Repeat for as many strings found
   found.forEach(async query => {
     // Remove brackets
-    query = query.replace(":{", "");
-    query = query.replace("}:", "");
+    if (extended) {
+      query = query.replace(":{{", "");
+      query = query.replace("}}:", "");
+    } else {
+      query = query.replace(":{", "");
+      query = query.replace("}:", "");
+    }
     query = query.trim();
 
     if (query === "") {
@@ -107,40 +112,10 @@ async function handleBracketsSearch(found, message) {
       return;
     }
 
-    const embed = generateMessageEmbed(anime, false);
+    const embed = generateMessageEmbed(anime, extended);
 
     message.channel.startTyping();
-    await message.channel.send(anime.title, {
-      embed
-    });
-    await message.react("✅");
-    message.channel.stopTyping(true);
-    winston.debug(`Sent reply for '${query}'`);
-  });
-}
-
-async function handleExtendedBracketsSearch(found, message) {
-  // Repeat for as many strings found
-  found.forEach(async query => {
-    // Remove brackets
-    query = query.replace(":{{", "");
-    query = query.replace("}}:", "");
-    query = query.trim();
-
-    if (query === "") {
-      return;
-    }
-
-    const anime = await animeSearch(query);
-    if (!anime) {
-      message.channel.send(`I was unable to find any anime called *${query}*`);
-      return;
-    }
-
-    const embed = generateMessageEmbed(anime, true);
-
-    message.channel.startTyping();
-    await message.channel.send(anime.title, {
+    await message.channel.send(`||${anime.title}||`, {
       embed
     });
     await message.react("✅");
