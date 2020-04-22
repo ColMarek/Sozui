@@ -62,6 +62,10 @@ describe("discord utils test", () => {
       const actual = ":{anime 1}: and :{anime 2}:".match(discordUtils.animeRegex);
       assert.deepEqual(actual, [":{anime 1}:", ":{anime 2}:"]);
     });
+    it("should match message with double brackets", () => {
+      const actual = ":{{anime 1}}: and :{{anime 2}}:".match(discordUtils.animeExtendedRegex);
+      assert.deepEqual(actual, [":{{anime 1}}:", ":{{anime 2}}:"]);
+    });
   });
 });
 
