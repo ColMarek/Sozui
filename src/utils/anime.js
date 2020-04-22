@@ -5,12 +5,13 @@ module.exports = {
       name: "Mean Score",
       value: anime.meanScore
     });
+    if (anime.episodes) {
+      fields.push({
+        name: "Episodes",
+        value: anime.episodes
+      });
+    }
     fields.push({ name: "Status", value: anime.status, inline: true });
-    fields.push({
-      name: "Episodes",
-      value: anime.episodes ? anime.episodes : "Unknown",
-      inline: true
-    });
     fields.push({ name: "Start Date", value: anime.startDate, inline: true });
     fields.push({ name: "End Date", value: anime.endDate, inline: true });
     fields.push({ name: "Genres", value: anime.genres, inline: false });
