@@ -28,6 +28,11 @@ module.exports = {
       return true;
     }
 
+    // If the message contains text wrapped in curly braces, it's valid
+    if (message.content.match(this.animeExtendedRegex)) {
+      return true;
+    }
+
     return false;
   },
   /**

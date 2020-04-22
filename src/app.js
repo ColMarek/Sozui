@@ -1,11 +1,9 @@
 const fs = require("fs");
 const winston = require("winston");
 const Discord = require("discord.js");
-
 const { botToken } = require("./config");
 const discordUtils = require("./utils/discord");
-const { generateMessageEmbed } = require("./utils/anime");
-const animeSearch = require("./core/animeSearch");
+const core = require("./core");
 
 if (!fs.existsSync(__dirname + "/../logs")) {
   fs.mkdirSync(__dirname + "/../logs");
@@ -61,13 +59,13 @@ client.on("message", async message => {
   // Handle :{{anime title}}:
   const foundExtended = message.content.match(discordUtils.animeExtendedRegex);
   if (foundExtended) {
-    await handleBracketsSearch(foundExtended, message, true);
+    await core.handleAnimeSearch(foundExtended, message, true);
     return;
   }
   // Handle :{anime title}:
   const found = message.content.match(discordUtils.animeRegex);
   if (found) {
-    await handleBracketsSearch(found, message, false);
+    await core.handleAnimeSearch(found, message, false);
     return;
   }
 
@@ -88,38 +86,5 @@ client.on("message", async message => {
     }
   }
 });
-
-async function handleBracketsSearch(found, message, extended) {
-  // Repeat for as many strings found
-  found.forEach(async query => {
-    // Remove brackets
-    if (extended) {
-      query = query.replace(":{{", "");
-      query = query.replace("}}:", "");
-    } else {
-      query = query.replace(":{", "");
-      query = query.replace("}:", "");
-    }
-    query = query.trim();
-
-    if (query === "") {
-      return;
-    }
-
-    const anime = await animeSearch(query);
-    if (!anime) {
-      message.channel.send(`I was unable to find any anime called *${query}*`);
-      return;
-    }
-
-    const embed = generateMessageEmbed(anime, extended);
-
-    message.channel.startTyping();
-    await message.channel.send(anime.title, embed);
-    await message.react("✅");
-    message.channel.stopTyping(true);
-    winston.debug(`Sent reply for '${query}'`);
-  });
-}
 
 client.login(botToken);
