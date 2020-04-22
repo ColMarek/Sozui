@@ -13,9 +13,7 @@ if (!fs.existsSync(__dirname + "/../logs")) {
 
 // Initialize logger
 const { combine, timestamp, printf } = winston.format;
-const customFormat = printf(
-  info => `${info.timestamp} ${info.level}: ${info.message}`
-);
+const customFormat = printf(info => `${info.timestamp} ${info.level}: ${info.message}`);
 winston.configure({
   level: "debug",
   format: combine(timestamp(), customFormat),
@@ -32,9 +30,7 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
 // Load command files
-const commandFiles = fs
-  .readdirSync(__dirname + "/commands")
-  .filter(file => file.endsWith(".js"));
+const commandFiles = fs.readdirSync(__dirname + "/commands").filter(file => file.endsWith(".js"));
 for (const file of commandFiles) {
   const command = require(`./commands/${file}`);
   client.commands.set(command.name, command);

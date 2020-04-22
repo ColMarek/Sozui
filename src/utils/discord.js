@@ -64,18 +64,13 @@ module.exports = {
 
     // Find command for the name
     const command =
-      client.commands.get(commandName) ||
-      client.commands.find(
-        cmd => cmd.aliases && cmd.aliases.includes(commandName)
-      );
+      client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
     // Check if command exists
     if (!command) {
       winston.warn(`Unable to find command for '${commandName}'`);
       const data = [];
-      data.push(
-        `${message.author} I could not find any command like '${commandName}'`
-      );
+      data.push(`${message.author} I could not find any command like '${commandName}'`);
       data.push(`Did you mean \`${prefix} anime ${commandName}\``);
       message.channel.send(data);
       return;
@@ -86,9 +81,7 @@ module.exports = {
       let reply = `You didn't provide any arguments, ${message.author}!`;
 
       if (command.usage) {
-        reply += `\nThe proper usage would be: \`${prefix} ${command.name} ${
-          command.usage
-        }\``;
+        reply += `\nThe proper usage would be: \`${prefix} ${command.name} ${command.usage}\``;
       }
 
       message.channel.send(reply);

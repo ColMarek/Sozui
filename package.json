@@ -7,6 +7,8 @@
   "author": "ColMarek",
   "license": "MIT",
   "scripts": {
+    "format": "prettier --write \"src/**/*.js\"",
+    "lint": "eslint \"src/**/*.js\" --fix",
     "start": "node ./src/app.js",
     "dev": "nodemon ./src/app.js",
     "test": "mocha",
@@ -17,15 +19,16 @@
     "axios": "^0.18.1",
     "discord.js": "^11.4.2",
     "dotenv": "^6.1.0",
+    "snyk": "^1.290.1",
     "striptags": "^3.1.1",
-    "winston": "^3.1.0",
-    "snyk": "^1.290.1"
+    "winston": "^3.1.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "eslint": "^5.7.0",
     "mocha": "^5.2.0",
-    "nodemon": "^1.18.4"
+    "nodemon": "^1.18.4",
+    "prettier": "^2.0.5"
   },
   "snyk": true
 }
