@@ -59,9 +59,7 @@ describe("discord utils test", () => {
 
   describe("regex", () => {
     it("should match message with brackets", () => {
-      const actual = ":{anime 1}: and :{anime 2}:".match(
-        discordUtils.bracketsRegex
-      );
+      const actual = ":{anime 1}: and :{anime 2}:".match(discordUtils.animeRegex);
       assert.deepEqual(actual, [":{anime 1}:", ":{anime 2}:"]);
     });
   });

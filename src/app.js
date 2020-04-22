@@ -59,7 +59,7 @@ client.on("message", async message => {
   );
 
   // Handle a message that uses brackets e.g. {anime title}
-  const found = message.content.match(discordUtils.bracketsRegex);
+  const found = message.content.match(discordUtils.animeRegex);
   if (found) {
     await handleBracketsSearch(found, message);
     return;

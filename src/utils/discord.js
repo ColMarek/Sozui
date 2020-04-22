@@ -2,12 +2,6 @@ const winston = require("winston");
 
 const { prefix } = require("./../config");
 
-/**
- * Regex for matching brackets
- * {anime title}
- */
-const bracketsRegex = /:\{(.*?)\}:/g;
-
 module.exports = {
   /**
    * Checks that a message is in the valid format for
@@ -30,7 +24,7 @@ module.exports = {
     }
 
     // If the message contains text wrapped in curly braces, it's valid
-    if (message.content.match(bracketsRegex)) {
+    if (message.content.match(this.animeRegex)) {
       return true;
     }
 
@@ -90,5 +84,9 @@ module.exports = {
 
     return command;
   },
-  bracketsRegex
+  /**
+   * Regex for matching brackets
+   * {anime title}
+   */
+  animeRegex: /:\{(.*?)\}:/g
 };
