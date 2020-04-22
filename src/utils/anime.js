@@ -1,3 +1,5 @@
+const Discord = require("discord.js");
+
 /**
  *
  * @param {} anime
@@ -40,18 +42,14 @@ function generateMessageEmbed(anime, extended) {
     color = 0xbf0909;
   }
 
-  const embed = {
-    title: anime.title,
-    url: anime.anilistUrl,
-    color,
-    thumbnail: {
-      url: anime.image
-    },
-    fields
-  };
-
+  const embed = new Discord.MessageEmbed()
+    .setColor(color)
+    .setTitle(anime.title)
+    .setURL(anime.anilistUrl)
+    .setThumbnail(anime.image)
+    .addFields(fields);
   if (extended) {
-    embed.description = anime.description;
+    embed.setDescription(anime.description);
   }
 
   return embed;
