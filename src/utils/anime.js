@@ -27,9 +27,6 @@ module.exports = {
       value: anime.malUrl,
       inline: false
     });
-    if (anime.kitsuUrl) {
-      fields.push({ name: "Kitsu URL", value: anime.kitsuUrl, inline: false });
-    }
 
     let color = 0x0cca4a;
     if (anime.isAdult) {
@@ -62,9 +59,6 @@ module.exports = {
       value: anime.malUrl,
       inline: false
     });
-    if (anime.kitsuUrl) {
-      fields.push({ name: "Kitsu URL", value: anime.kitsuUrl, inline: false });
-    }
 
     let color = 0x0cca4a;
     if (anime.isAdult) {
