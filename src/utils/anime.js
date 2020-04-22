@@ -50,7 +50,7 @@ function generateMessageEmbed(anime, extended) {
     fields
   };
 
-  if (!extended) {
+  if (extended) {
     embed.description = anime.description;
   }
 
