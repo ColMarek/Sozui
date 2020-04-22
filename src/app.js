@@ -115,7 +115,7 @@ async function handleBracketsSearch(found, message, extended) {
     const embed = generateMessageEmbed(anime, extended);
 
     message.channel.startTyping();
-    await message.channel.send(embed);
+    await message.channel.send(anime.title, embed);
     await message.react("✅");
     message.channel.stopTyping(true);
     winston.debug(`Sent reply for '${query}'`);
