@@ -85,8 +85,11 @@ module.exports = {
     return command;
   },
   /**
-   * Regex for matching brackets
-   * {anime title}
+   * :{anime title}:
    */
-  animeRegex: /:\{(.*?)\}:/g
+  animeRegex: /:\{(.*?)\}:/g,
+  /**
+   * :{{anime title}}:
+   */
+  animeExtendedRegex: /:\{\{(.*?)\}\}:/g
 };

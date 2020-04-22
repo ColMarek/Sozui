@@ -4,7 +4,7 @@ const Discord = require("discord.js");
 
 const { botToken } = require("./config");
 const discordUtils = require("./utils/discord");
-const { generateMiniMessageEmbed } = require("./utils/anime");
+const { generateMiniMessageEmbed, generateMessageEmbed } = require("./utils/anime");
 const animeSearch = require("./core/animeSearch");
 
 if (!fs.existsSync(__dirname + "/../logs")) {
@@ -58,7 +58,13 @@ client.on("message", async message => {
       message.content
   );
 
-  // Handle a message that uses brackets e.g. {anime title}
+  // Handle :{{anime title}}:
+  const foundExtended = message.content.match(discordUtils.animeExtendedRegex);
+  if (foundExtended) {
+    await handleExtendedBracketsSearch(foundExtended, message);
+    return;
+  }
+  // Handle :{anime title}:
   const found = message.content.match(discordUtils.animeRegex);
   if (found) {
     await handleBracketsSearch(found, message);
@@ -102,6 +108,36 @@ async function handleBracketsSearch(found, message) {
     }
 
     const embed = generateMiniMessageEmbed(anime);
+
+    message.channel.startTyping();
+    await message.channel.send(anime.title, {
+      embed
+    });
+    await message.react("✅");
+    message.channel.stopTyping(true);
+    winston.debug(`Sent reply for '${query}'`);
+  });
+}
+
+async function handleExtendedBracketsSearch(found, message) {
+  // Repeat for as many strings found
+  found.forEach(async query => {
+    // Remove brackets
+    query = query.replace(":{{", "");
+    query = query.replace("}}:", "");
+    query = query.trim();
+
+    if (query === "") {
+      return;
+    }
+
+    const anime = await animeSearch(query);
+    if (!anime) {
+      message.channel.send(`I was unable to find any anime called *${query}*`);
+      return;
+    }
+
+    const embed = generateMessageEmbed(anime);
 
     message.channel.startTyping();
     await message.channel.send(anime.title, {
