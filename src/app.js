@@ -4,7 +4,7 @@ const Discord = require("discord.js");
 
 const { botToken } = require("./config");
 const discordUtils = require("./utils/discord");
-const { generateMiniMessageEmbed, generateMessageEmbed } = require("./utils/anime");
+const { generateMessageEmbed } = require("./utils/anime");
 const animeSearch = require("./core/animeSearch");
 
 if (!fs.existsSync(__dirname + "/../logs")) {
@@ -107,7 +107,7 @@ async function handleBracketsSearch(found, message) {
       return;
     }
 
-    const embed = generateMiniMessageEmbed(anime);
+    const embed = generateMessageEmbed(anime, false);
 
     message.channel.startTyping();
     await message.channel.send(anime.title, {
@@ -137,7 +137,7 @@ async function handleExtendedBracketsSearch(found, message) {
       return;
     }
 
-    const embed = generateMessageEmbed(anime);
+    const embed = generateMessageEmbed(anime, true);
 
     message.channel.startTyping();
     await message.channel.send(anime.title, {
