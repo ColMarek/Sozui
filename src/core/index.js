@@ -71,7 +71,7 @@ async function handleSearch(type, found, message, extended) {
         return;
       }
 
-      const embed = generateMessageEmbed(media, extended);
+      const embed = generateMessageEmbed(type, media, extended);
 
       message.channel.startTyping();
       await message.channel.send(media.title, embed);
