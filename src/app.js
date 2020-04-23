@@ -56,16 +56,8 @@ client.on("message", async message => {
       message.content
   );
 
-  // Handle :{{anime title}}:
-  const foundExtended = message.content.match(discordUtils.animeExtendedRegex);
-  if (foundExtended) {
-    await core.handleAnimeSearch(foundExtended, message, true);
-    return;
-  }
-  // Handle :{anime title}:
-  const found = message.content.match(discordUtils.animeRegex);
-  if (found) {
-    await core.handleAnimeSearch(found, message, false);
+  const handled = core.checkAndHandleBracketsSearch(message);
+  if (handled) {
     return;
   }
 
