@@ -1,9 +1,9 @@
 const striptags = require("striptags");
 
-class Anime {
+class Media {
   /**
    *
-   * @param {String} title User preferred anime title
+   * @param {String} title Medial title
    * @param {String} image Url of cover image. Medium size
    * @param {String} description Description
    * @param {String[]} genres A list of genres
@@ -11,9 +11,9 @@ class Anime {
    * @param {String} anilistUrl Url on Anilist
    * @param {String} malId Id on MyAnimeList
    * @param {String} status Current releasing status
-   * @param {String} startDate First official release date of the anime
-   * @param {String} endDate Last official release date of the anime
-   * @param {Number} episodes The number of episode the anime had when it was completed.
+   * @param {String} startDate First official release date of the media
+   * @param {String} endDate Last official release date of the media
+   * @param {Number} episodes The number of episode the media had when it was completed.
    * @param {Number} duration The length of each episode
    * @param {Boolean} isAdult If the media is intended for 18+ audiences
    */
@@ -48,4 +48,4 @@ class Anime {
   }
 }
 
-module.exports = Anime;
+module.exports = Media;

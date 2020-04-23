@@ -1,9 +1,10 @@
 const winston = require("winston");
 const { generateMessageEmbed } = require("../utils/anime");
 const discordUtils = require("../utils/discord");
-const animeSearch = require("./animeSearch");
 // eslint-disable-next-line no-unused-vars
 const Discord = require("discord.js");
+const anilist = require("./anilist");
+const Media = require("../models/Media");
 
 /**
  * Check if a message contains a bracket link and handle if it does.
@@ -12,36 +13,55 @@ const Discord = require("discord.js");
  */
 async function checkAndHandleBracketsSearch(message) {
   // Handle :{{anime title}}:
-  const foundExtended = message.content.match(discordUtils.animeExtendedRegex);
-  if (foundExtended) {
-    await handleAnimeSearch(foundExtended, message, true);
+  const animeExtendedFound = message.content.match(discordUtils.animeExtendedRegex);
+  if (animeExtendedFound) {
+    await handleSearch("ANIME", animeExtendedFound, message, true);
     return;
   }
   // Handle :{anime title}:
-  const found = message.content.match(discordUtils.animeRegex);
-  if (found) {
-    await handleAnimeSearch(found, message, false);
+  const animeFound = message.content.match(discordUtils.animeRegex);
+  if (animeFound) {
+    await handleSearch("ANIME", animeFound, message, false);
+    return;
+  }
+  // Handle :<<manga title>>:
+  const mangaExtendedFound = message.content.match(discordUtils.mangaExtendedRegex);
+  if (mangaExtendedFound) {
+    await handleSearch("MANGA", mangaExtendedFound, message, true);
+    return;
+  }
+  // Handle :<manga title>:
+  const mangaFound = message.content.match(discordUtils.mangaRegex);
+  if (mangaFound) {
+    await handleSearch("MANGA", mangaFound, message, false);
     return;
   }
 }
 
 /**
  *
- * @param {RegExpMatchArray} found
+ * @param {string} type ANIME or MANGA
+ * @param {RegExpMatchArray} found Matches in regex
  * @param {Discord.Message} message
  * @param {boolean} extended
  */
-async function handleAnimeSearch(found, message, extended) {
+async function handleSearch(type, found, message, extended) {
   // Repeat for as many strings found
   found.forEach(async query => {
-    // Remove brackets
-    if (extended) {
-      query = query.replace(":{{", "");
-      query = query.replace("}}:", "");
-    } else {
-      query = query.replace(":{", "");
-      query = query.replace("}:", "");
-    }
+    // Remove anime extended brackets
+    query = query.replace(":{{", "");
+    query = query.replace("}}:", "");
+    // Remove anime brackets
+    query = query.replace(":{", "");
+    query = query.replace("}:", "");
+    // Remove manga extened
+    query = query.replace(":<<", "");
+    query = query.replace(">>:", "");
+    // Remove manga brackets
+    query = query.replace(":<", "");
+    query = query.replace(">:", "");
+
+    // Remove any extra space
     query = query.trim();
 
     if (query === "") {
@@ -49,25 +69,64 @@ async function handleAnimeSearch(found, message, extended) {
     }
 
     try {
-      const anime = await animeSearch(query);
-      if (!anime) {
-        message.channel.send(`I was unable to find any anime called *${query}*`);
+      const media = await searchAnilist(type, query);
+      if (!media) {
+        message.channel.send(`I was unable to find any ${type.toLowerCase()} called *${query}*`);
         return;
       }
 
-      const embed = generateMessageEmbed(anime, extended);
+      const embed = generateMessageEmbed(media, extended);
 
       message.channel.startTyping();
-      await message.channel.send(anime.title, embed);
+      await message.channel.send(media.title, embed);
       await message.react("✅");
       await message.channel.stopTyping(true);
       winston.debug(`Sent reply for '${query}'`);
     } catch (e) {
       await message.react("❗");
-      await message.channel.stopTyping();
+      await message.channel.stopTyping(true);
       winston.error(e);
     }
   });
+}
+
+/**
+ * @param {string} type ANIME or MANGA
+ * @param {String} query Anime title
+ */
+async function searchAnilist(type, query) {
+  winston.debug(`Searching for ${type} '${query}'`);
+
+  let a;
+  if (type == "ANIME") {
+    a = await anilist.searchAnime(query);
+  } else if (type == "MANGA") {
+    a = await anilist.searchManga(query);
+  }
+
+  if (!a) {
+    winston.debug(`Unable to find '${query}' on Anilist`);
+    return null;
+  }
+  winston.debug(`Found '${query}' on Anilist`);
+
+  const anime = new Media(
+    a.title.romaji,
+    a.coverImage.medium,
+    a.description,
+    a.genres,
+    a.meanScore,
+    a.siteUrl,
+    a.idMal,
+    a.status,
+    `${a.startDate.day}-${a.startDate.month}-${a.startDate.year}`,
+    `${a.endDate.day}-${a.endDate.month}-${a.endDate.year}`,
+    a.episodes,
+    a.duration,
+    a.isAdult
+  );
+
+  return anime;
 }
 
 module.exports = {

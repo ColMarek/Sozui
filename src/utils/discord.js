@@ -33,6 +33,16 @@ module.exports = {
       return true;
     }
 
+    // If the message contains text wrapped in curly braces, it's valid
+    if (message.content.match(this.mangaRegex)) {
+      return true;
+    }
+
+    // If the message contains text wrapped in curly braces, it's valid
+    if (message.content.match(this.mangaExtendedRegex)) {
+      return true;
+    }
+
     return false;
   },
   /**
@@ -96,5 +106,13 @@ module.exports = {
   /**
    * :{{anime title}}:
    */
-  animeExtendedRegex: /:\{\{(.*?)\}\}:/g
+  animeExtendedRegex: /:\{\{(.*?)\}\}:/g,
+  /**
+   * :{anime title}:
+   */
+  mangaRegex: /:<(.*?)>:/g,
+  /**
+   * :{{anime title}}:
+   */
+  mangaExtendedRegex: /:<<(.*?)>>:/g
 };
