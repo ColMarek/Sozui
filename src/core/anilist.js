@@ -33,7 +33,7 @@ async function searchMedia(media, title) {
 					romaji
 				}
 				coverImage{
-					medium
+					large
 				}
 				description(asHtml:false)
         genres

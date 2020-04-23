@@ -108,7 +108,7 @@ async function searchAnilist(type, query) {
 
   const anime = new Media(
     a.title.romaji,
-    a.coverImage.medium,
+    a.coverImage.large,
     a.description,
     a.genres,
     a.meanScore,
