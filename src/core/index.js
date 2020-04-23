@@ -16,25 +16,21 @@ async function checkAndHandleBracketsSearch(message) {
   const animeExtendedFound = message.content.match(discordUtils.animeExtendedRegex);
   if (animeExtendedFound) {
     await handleSearch("ANIME", animeExtendedFound, message, true);
-    return;
   }
   // Handle :{anime title}:
   const animeFound = message.content.match(discordUtils.animeRegex);
   if (animeFound) {
     await handleSearch("ANIME", animeFound, message, false);
-    return;
   }
   // Handle :<<manga title>>:
   const mangaExtendedFound = message.content.match(discordUtils.mangaExtendedRegex);
   if (mangaExtendedFound) {
     await handleSearch("MANGA", mangaExtendedFound, message, true);
-    return;
   }
   // Handle :<manga title>:
   const mangaFound = message.content.match(discordUtils.mangaRegex);
   if (mangaFound) {
     await handleSearch("MANGA", mangaFound, message, false);
-    return;
   }
 }
 
