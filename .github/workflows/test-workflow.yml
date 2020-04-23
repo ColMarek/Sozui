@@ -14,4 +14,5 @@ jobs:
         env:
           CI: true
         run: |
+          yarn install
           yarn test
