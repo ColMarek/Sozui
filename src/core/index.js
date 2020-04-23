@@ -32,6 +32,12 @@ async function checkAndHandleBracketsSearch(message) {
   if (mangaFound) {
     await handleSearch("MANGA", mangaFound, message, false);
   }
+
+  if (animeExtendedFound || animeFound || mangaExtendedFound || mangaFound) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 /**

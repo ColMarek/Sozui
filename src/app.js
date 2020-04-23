@@ -56,7 +56,7 @@ client.on("message", async message => {
       message.content
   );
 
-  const handled = core.checkAndHandleBracketsSearch(message);
+  const handled = await core.checkAndHandleBracketsSearch(message);
   if (handled) {
     return;
   }
