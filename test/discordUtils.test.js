@@ -32,9 +32,26 @@ describe("discord utils test", () => {
       assert.strictEqual(actual, true);
     });
 
-    it("should succed if message has brackets", () => {
-      // const message = generateMessage(":{}:", false, "text");
+    it("should succed if message has anime brackets", () => {
       const message = generateMessage(":{title}:", false, "text");
+
+      const actual = discordUtils.isValidMessage(message);
+      assert.strictEqual(actual, true);
+    });
+    it("should succed if message has anime extended brackets", () => {
+      const message = generateMessage(":{{title}}:", false, "text");
+
+      const actual = discordUtils.isValidMessage(message);
+      assert.strictEqual(actual, true);
+    });
+    it("should succed if message has manga brackets", () => {
+      const message = generateMessage(":<title>:", false, "text");
+
+      const actual = discordUtils.isValidMessage(message);
+      assert.strictEqual(actual, true);
+    });
+    it("should succed if message has manga extended brackets", () => {
+      const message = generateMessage(":<<title>>:", false, "text");
 
       const actual = discordUtils.isValidMessage(message);
       assert.strictEqual(actual, true);
