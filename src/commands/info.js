@@ -6,9 +6,7 @@ module.exports = {
   usage: "",
   execute: async message => {
     const data = [];
-    data.push(`I am a bot that you can use to search for Anime. Use \`${prefix} help\` to see a list of commands.`);
-    data.push("");
-    data.push(`**Prefix**: ${prefix}`);
+    data.push(`I am a bot that you can use to link anime and manga. Use \`${prefix} help\`.`);
     data.push("**Developer**: ColMarek");
     data.push("**Source Code**: https://github.com/ColMarek/Sozui");
 

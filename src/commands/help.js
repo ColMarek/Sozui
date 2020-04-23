@@ -11,15 +11,14 @@ module.exports = {
 
     if (!args.length) {
       data.push("You can link anime/manga using:");
-      // Spacing is correct for Discord
-      data.push("Anime                     ->  :{anime title}:");
+      data.push("```");
+      data.push("Anime             ->  :{anime title}:");
       data.push("Anime (detailed)  ->  :{{anime title}}:");
-      data.push("Manga                     ->  :<manga title>:");
+      data.push("Manga             ->  :<manga title>:");
       data.push("Manga (detailed)  ->  :<<manga title>>:");
-      data.push("");
+      data.push("```");
       data.push("Here's a list of all my commands:");
       data.push(commands.map(command => command.name).join(", "));
-      data.push(`\nYou can send \`${prefix} help [command name]\` to get info on a specific command!`);
 
       await message.channel.send(data, { split: true });
 

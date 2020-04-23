@@ -80,7 +80,7 @@ module.exports = {
       winston.warn(`Unable to find command for '${commandName}'`);
       const data = [];
       data.push(`${message.author} I could not find any command like '${commandName}'`);
-      data.push(`Did you mean \`${prefix} anime ${commandName}\``);
+      data.push(`Try \`${prefix} help\``);
       message.channel.send(data);
       return;
     }
