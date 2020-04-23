@@ -9,7 +9,6 @@ class Media {
    * @param {String[]} genres A list of genres
    * @param {Number} meanScore Mean score on Anilist
    * @param {String} anilistUrl Url on Anilist
-   * @param {String} malId Id on MyAnimeList
    * @param {String} status Current releasing status
    * @param {String} startDate First official release date of the media
    * @param {String} endDate Last official release date of the media
@@ -24,7 +23,6 @@ class Media {
     genres,
     meanScore,
     anilistUrl,
-    malId,
     status,
     startDate,
     endDate,
@@ -38,7 +36,6 @@ class Media {
     this.genres = genres.join().replace(",", ", ");
     this.meanScore = meanScore;
     this.anilistUrl = anilistUrl;
-    this.malUrl = "http://myanimelist.net/anime/" + malId;
     this.status = status;
     this.startDate = startDate;
     this.endDate = endDate;

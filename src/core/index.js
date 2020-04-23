@@ -113,7 +113,6 @@ async function searchAnilist(type, query) {
     a.genres,
     a.meanScore,
     a.siteUrl,
-    a.idMal,
     a.status,
     `${a.startDate.day}-${a.startDate.month}-${a.startDate.year}`,
     `${a.endDate.day}-${a.endDate.month}-${a.endDate.year}`,

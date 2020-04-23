@@ -28,7 +28,6 @@ async function searchMedia(media, title) {
 	query{
 		Page(page: 1, perPage: 1) {
 			media(sort: SEARCH_MATCH, type: ${media}, search:"${title}") {
-        idMal
 				title {
 					romaji
 				}
