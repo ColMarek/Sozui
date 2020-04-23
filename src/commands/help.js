@@ -10,11 +10,12 @@ module.exports = {
     const { commands } = message.client;
 
     if (!args.length) {
-      data.push("You can search for anime by:");
-      data.push(
-        " - wrapping the anime title in a colon and curly braces e.g. `:{Fullmetal Alchemist}:`. This will allow you to search for multiple anime in one message."
-      );
-      data.push(` - using the _anime_ command e.g. \`${prefix} anime Fullmetal Alchemist\``);
+      data.push("You can link anime/manga using:");
+      // Spacing is correct for Discord
+      data.push("Anime                     ->  :{anime title}:");
+      data.push("Anime (detailed)  ->  :{{anime title}}:");
+      data.push("Manga                     ->  :<manga title>:");
+      data.push("Manga (detailed)  ->  :<<manga title>>:");
       data.push("");
       data.push("Here's a list of all my commands:");
       data.push(commands.map(command => command.name).join(", "));
