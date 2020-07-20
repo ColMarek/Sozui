@@ -102,17 +102,17 @@ module.exports = {
   /**
    * :{anime title}:
    */
-  animeRegex: /:\{[^{](.*?)[^}]\}:/g,
+  animeExtendedRegex: /:\{[^{](.*?)[^}]\}:/g,
   /**
    * :{{anime title}}:
    */
-  animeExtendedRegex: /:\{\{(.*?)\}\}:/g,
+  animeRegex: /:\{\{(.*?)\}\}:/g,
   /**
-   * :{anime title}:
+   * :{{manga title}}:
    */
-  mangaRegex: /:<[^<](.*?)[^>]>:/g,
+  mangaExtendedRegex: /:<[^<](.*?)[^>]>:/g,
   /**
-   * :{{anime title}}:
+   * :{manga title}:
    */
-  mangaExtendedRegex: /:<<(.*?)>>:/g
+  mangaRegex: /:<<(.*?)>>:/g
 };
