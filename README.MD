@@ -17,14 +17,15 @@ Manga (detailed)  ->  :<manga title>:
 Manga             ->  :<<manga title>>:
 ```
 
+React with `📹` on a response within 20s of it being sent to post the trailer (if it has one).
+
 ## Commands
 
 Default prefix: `!sozui`
 
 Use `!sozui help` to view a more updated list of commands.
 
-**NB:** In a DM message, you don't need a prefix.  
-**NB:** Do not include the angle brackets `<`, `>` in the command.
+**NB:** In a DM message, you don't need a prefix.
 
 ### Help
 

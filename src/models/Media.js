@@ -15,6 +15,8 @@ class Media {
    * @param {Number} episodes The number of episode the media had when it was completed.
    * @param {Number} duration The length of each episode
    * @param {Boolean} isAdult If the media is intended for 18+ audiences
+   * @param {String} trailerId The ID of the trailer
+   * @param {String} trailerSite The site hosting the trailer
    */
   constructor(
     title,
@@ -28,7 +30,9 @@ class Media {
     endDate,
     episodes,
     duration,
-    isAdult
+    isAdult,
+    trailerId,
+    trailerSite
   ) {
     this.title = title;
     this.image = image;
@@ -42,6 +46,11 @@ class Media {
     this.episodes = episodes;
     this.duration = duration;
     this.isAdult = isAdult;
+    if (trailerSite == "youtube") {
+      this.trailerUrl = `https://www.youtube.com/watch?v=${trailerId}`;
+    } else if (trailerSite == "dailymotion") {
+      this.trailerUrl = `https://www.dailymotion.com/video/${trailerId}`;
+    }
   }
 }
 

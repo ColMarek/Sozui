@@ -52,6 +52,10 @@ async function searchMedia(media, title) {
         episodes
         duration
         isAdult
+        trailer {
+          id
+          site
+        }
 			}
 		}
 	}

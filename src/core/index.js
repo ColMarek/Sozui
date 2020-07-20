@@ -80,7 +80,22 @@ async function handleSearch(type, found, message, extended) {
       const embed = generateMessageEmbed(type, media, extended);
 
       message.channel.startTyping();
-      await message.channel.send(media.title, embed);
+      const sentMessage = await message.channel.send(media.title, embed);
+      if (media.trailerUrl) {
+        await sentMessage.react("📹");
+      }
+
+      // Wait for 📹reaction to show trailer
+      const filter = (reaction, user) => {
+        return reaction.emoji.name === "📹" && !user.bot;
+      };
+      const collector = sentMessage.createReactionCollector(filter, { max: 1, time: 20000 });
+      collector.on("collect", () => {
+        if (media.trailerUrl) {
+          message.channel.send(media.trailerUrl);
+        }
+      });
+
       await message.react("✅");
       await message.channel.stopTyping(true);
       winston.debug(`Sent reply for '${query}'`);
@@ -124,7 +139,9 @@ async function searchAnilist(type, query) {
     `${a.endDate.day}-${a.endDate.month}-${a.endDate.year}`,
     a.episodes,
     a.duration,
-    a.isAdult
+    a.isAdult,
+    a.trailer.id,
+    a.trailer.site
   );
 
   return anime;
