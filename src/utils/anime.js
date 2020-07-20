@@ -23,7 +23,9 @@ function generateMessageEmbed(type, media, extended) {
     }
     fields.push({ name: "Status", value: media.status, inline: true });
     fields.push({ name: "Start Date", value: media.startDate, inline: true });
-    fields.push({ name: "End Date", value: media.endDate, inline: true });
+    if (!media.endDate.match(/.*null.*/g)) {
+      fields.push({ name: "End Date", value: media.endDate, inline: true });
+    }
   }
   fields.push({ name: "Genres", value: media.genres, inline: false });
   if (media.isAdult) {
