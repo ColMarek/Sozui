@@ -11,10 +11,10 @@ A Discord bot for anime/manga.
 You can link anime/manga using:
 
 ```
-Anime             ->  :{anime title}:
-Anime (detailed)  ->  :{{anime title}}:
-Manga             ->  :<manga title>:
-Manga (detailed)  ->  :<<manga title>>:
+Anime (detailed)  ->  :{anime title}:
+Anime             ->  :{{anime title}}:
+Manga (detailed)  ->  :<manga title>:
+Manga             ->  :<<manga title>>:
 ```
 
 ## Commands
