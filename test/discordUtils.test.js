@@ -76,19 +76,19 @@ describe("discord utils test", () => {
 
   describe("regex", () => {
     it("should match message with brackets", () => {
-      const actual = ":{anime 1}: and :{anime 2}:".match(discordUtils.animeRegex);
+      const actual = ":{anime 1}: and :{anime 2}:".match(discordUtils.animeExtendedRegex);
       assert.deepEqual(actual, [":{anime 1}:", ":{anime 2}:"]);
     });
     it("should match message with double brackets", () => {
-      const actual = ":{{anime 1}}: and :{{anime 2}}:".match(discordUtils.animeExtendedRegex);
+      const actual = ":{{anime 1}}: and :{{anime 2}}:".match(discordUtils.animeRegex);
       assert.deepEqual(actual, [":{{anime 1}}:", ":{{anime 2}}:"]);
     });
     it("should match message with angle brackets", () => {
-      const actual = ":<anime 1>: and :<anime 2>:".match(discordUtils.mangaRegex);
+      const actual = ":<anime 1>: and :<anime 2>:".match(discordUtils.mangaExtendedRegex);
       assert.deepEqual(actual, [":<anime 1>:", ":<anime 2>:"]);
     });
     it("should match message with double angle brackets", () => {
-      const actual = ":<<anime 1>>: and :<<anime 2>>:".match(discordUtils.mangaExtendedRegex);
+      const actual = ":<<anime 1>>: and :<<anime 2>>:".match(discordUtils.mangaRegex);
       assert.deepEqual(actual, [":<<anime 1>>:", ":<<anime 2>>:"]);
     });
   });
