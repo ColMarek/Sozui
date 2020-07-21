@@ -17,6 +17,8 @@ module.exports = {
       data.push("Manga (detailed)  ->  :<manga title>:");
       data.push("Manga             ->  :<<manga title>>:");
       data.push("```");
+      data.push("React with \\📹 on a response within 20s of it being sent to post the trailer (if it has one)");
+      data.push("");
       data.push("Here's a list of all my commands:");
       data.push(commands.map(command => command.name).join(", "));
 
