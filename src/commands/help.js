@@ -12,10 +12,10 @@ module.exports = {
     if (!args.length) {
       data.push("You can link anime/manga using:");
       data.push("```");
-      data.push("Anime             ->  :{anime title}:");
-      data.push("Anime (detailed)  ->  :{{anime title}}:");
-      data.push("Manga             ->  :<manga title>:");
-      data.push("Manga (detailed)  ->  :<<manga title>>:");
+      data.push("Anime (detailed)  ->  :{anime title}:");
+      data.push("Anime             ->  :{{anime title}}:");
+      data.push("Manga (detailed)  ->  :<manga title>:");
+      data.push("Manga             ->  :<<manga title>>:");
       data.push("```");
       data.push("Here's a list of all my commands:");
       data.push(commands.map(command => command.name).join(", "));
