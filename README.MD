@@ -19,6 +19,10 @@ Manga             ->  :<<manga title>>:
 
 React with `📹` on a response within 20s of it being sent to post the trailer (if it has one).
 
+![Detail](./img/detail.png)
+
+![Mini](./img/mini.png)
+
 ## Commands
 
 Default prefix: `!sozui`
