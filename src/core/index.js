@@ -140,8 +140,8 @@ async function searchAnilist(type, query) {
     a.episodes,
     a.duration,
     a.isAdult,
-    a.trailer.id,
-    a.trailer.site
+    a.trailer ? a.trailer.id : null,
+    a.trailer ? a.trailer.site : null
   );
 
   return anime;
