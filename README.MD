@@ -17,7 +17,7 @@ Manga (detailed)  ->  :<manga title>:
 Manga             ->  :<<manga title>>:
 ```
 
-React with `📹` on a response within 20s of it being sent to post the trailer (if it has one).
+React with `📹` on a response within 5m of it being sent to post the trailer (if it has one).
 
 ![Detail](./img/detail.png)
 
