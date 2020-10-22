@@ -89,7 +89,7 @@ async function handleSearch(type, found, message, extended) {
       const filter = (reaction, user) => {
         return reaction.emoji.name === "📹" && !user.bot;
       };
-      const collector = sentMessage.createReactionCollector(filter, { max: 1, time: 20000 });
+      const collector = sentMessage.createReactionCollector(filter, { max: 1, time: 5 * 60 * 1000 });
       collector.on("collect", () => {
         if (media.trailerUrl) {
           message.channel.send(media.trailerUrl);
