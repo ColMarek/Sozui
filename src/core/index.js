@@ -49,7 +49,7 @@ async function checkAndHandleBracketsSearch(message) {
  */
 async function handleSearch(type, found, message, extended) {
   // Repeat for as many strings found
-  found.forEach(async query => {
+  for (let query of found) {
     // Remove anime extended brackets
     query = query.replace(":{{", "");
     query = query.replace("}}:", "");
@@ -104,7 +104,7 @@ async function handleSearch(type, found, message, extended) {
       await message.channel.stopTyping(true);
       winston.error(e);
     }
-  });
+  }
 }
 
 /**
