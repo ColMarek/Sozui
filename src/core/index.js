@@ -42,6 +42,30 @@ async function checkAndHandleBracketsSearch(message) {
 
 /**
  *
+ * @param query The user query
+ * @returns {Promise<Media[]>}
+ */
+async function searchForTitle(query) {
+  return (await anilist.searchAnime(query, 5)).map(a => new Media(
+    a.title.romaji,
+    a.coverImage.extraLarge,
+    a.description,
+    a.genres,
+    a.meanScore,
+    a.siteUrl,
+    a.status,
+    `${a.startDate.day}-${a.startDate.month}-${a.startDate.year}`,
+    `${a.endDate.day}-${a.endDate.month}-${a.endDate.year}`,
+    a.episodes,
+    a.duration,
+    a.isAdult,
+    a.trailer ? a.trailer.id : null,
+    a.trailer ? a.trailer.site : null
+  ));
+}
+
+/**
+ *
  * @param {string} type ANIME or MANGA
  * @param {RegExpMatchArray} found Matches in regex
  * @param {Discord.Message} message
@@ -116,9 +140,9 @@ async function searchAnilist(type, query) {
 
   let a;
   if (type == "ANIME") {
-    a = await anilist.searchAnime(query);
+    a = (await anilist.searchAnime(query, 1))[0];
   } else if (type == "MANGA") {
-    a = await anilist.searchManga(query);
+    a = (await anilist.searchManga(query, 1))[0];
   }
 
   if (!a) {
@@ -148,5 +172,6 @@ async function searchAnilist(type, query) {
 }
 
 module.exports = {
-  checkAndHandleBracketsSearch
+  checkAndHandleBracketsSearch,
+  searchForTitle
 };
