@@ -17,11 +17,21 @@ Manga (detailed)  ->  :<manga title>:
 Manga             ->  :<<manga title>>:
 ```
 
+You can search for anime using:
+
+```
+!sozui search "Anime title"
+```
+
+Then click the corresponding reaction (emoji) number to post the anime's info.
+
 React with `📹` on a response within 5m of it being sent to post the trailer (if it has one).
 
 ![Detail](./img/detail.png)
 
 ![Mini](./img/mini.png)
+
+![Search](./img/search.png)
 
 ## Commands
 
@@ -30,6 +40,10 @@ Default prefix: `!sozui`
 Use `!sozui help` to view a more updated list of commands.
 
 **NB:** In a DM message, you don't need a prefix.
+
+### Search
+
+`!sozui search "Anime title"`
 
 ### Help
 
