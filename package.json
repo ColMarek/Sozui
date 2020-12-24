@@ -14,7 +14,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "discord.js": "12.2.0",
     "dotenv": "^6.1.0",
     "striptags": "^3.1.1",
