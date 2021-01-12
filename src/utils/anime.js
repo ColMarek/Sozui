@@ -27,7 +27,9 @@ function generateMessageEmbed(type, media, extended) {
       fields.push({ name: "End Date", value: media.endDate, inline: true });
     }
   }
-  fields.push({ name: "Genres", value: media.genres, inline: false });
+  if (media.genres) {
+    fields.push({ name: "Genres", value: media.genres, inline: false });
+  }
   if (media.isAdult) {
     fields.push({ name: "NSFW", value: "true", inline: false });
   }
