@@ -1,4 +1,4 @@
-import * as striptags from "striptags"
+import * as striptags from "striptags";
 
 export class Media {
   title: string

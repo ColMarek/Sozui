@@ -1,4 +1,4 @@
-import {default as axios} from "axios"
+import { default as axios } from "axios";
 
 const BASE_URL = "https://graphql.anilist.co";
 

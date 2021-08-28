@@ -1,5 +1,4 @@
-import * as Discord from "discord.js"
-import {Media} from "../models/Media"
+import * as Discord from "discord.js";
 
 /**
  *

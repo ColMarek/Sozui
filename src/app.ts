@@ -1,9 +1,9 @@
-import * as fs from "fs"
-import * as winston from "winston"
-import * as Discord from "discord.js"
-import {config} from "./config"
-import * as discordUtils from "./utils/discord"
-import * as core from "./core"
+import * as fs from "fs";
+import * as winston from "winston";
+import * as Discord from "discord.js";
+import { config } from "./config";
+import * as discordUtils from "./utils/discord";
+import * as core from "./core";
 
 if (!fs.existsSync(__dirname + "/../logs")) {
   fs.mkdirSync(__dirname + "/../logs");
@@ -25,14 +25,14 @@ winston.configure({
 });
 
 const client = new Discord.Client();
-// @ts-ignore
+// @ts-expect-error: TODO Fixed with rewrite
 client.commands = new Discord.Collection();
 
 // Load command files
 const commandFiles = fs.readdirSync(__dirname + "/commands").filter(file => file.endsWith(".ts"));
 for (const file of commandFiles) {
   const command = require(`./commands/${file}`).cmd;
-  // @ts-ignore
+  // @ts-expect-error: TODO Fixed with rewrite
   client.commands.set(command.name, command);
 }
 
@@ -40,7 +40,7 @@ for (const file of commandFiles) {
  * Bot is initialized
  */
 client.on("ready", () => {
-  // @ts-ignore
+  // @ts-expect-error: TODO Fixed with rewrite
   winston.info(`Logged in as ${client.user.tag}!`);
 });
 
@@ -70,16 +70,16 @@ client.on("message", async message => {
   // If the command is valid
   if (command) {
     try {
-      message.channel.startTyping();
+      await message.channel.startTyping();
       await command.execute(message, args);
       await message.react("✅");
       message.channel.stopTyping(true);
     } catch (error) {
       message.channel.stopTyping();
       winston.error(error);
-      message.reply("There was an error trying to execute that command!");
+      await message.reply("There was an error trying to execute that command!");
     }
   }
 });
 
-client.login(config.botToken);
+client.login(config.botToken).catch(e => winston.error(e.message));

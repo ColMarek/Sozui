@@ -1,9 +1,8 @@
-import * as winston from "winston"
-import {generateMessageEmbed} from "../utils/anime"
-import * as discordUtils from "../utils/discord"
-import * as Discord from "discord.js"
-import * as anilist from "./anilist"
-import { Media } from "../models/Media"
+import * as winston from "winston";
+import { generateMessageEmbed } from "../utils/anime";
+import * as discordUtils from "../utils/discord";
+import * as anilist from "./anilist";
+import { Media } from "../models/Media";
 
 /**
  * Check if a message contains a bracket link and handle if it does.

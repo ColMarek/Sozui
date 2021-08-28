@@ -7,10 +7,10 @@
   "author": "ColMarek",
   "license": "MIT",
   "scripts": {
-    "format": "prettier --write \"src/**/*.js\"",
-    "lint": "eslint \"src/**/*.js\" --fix",
     "start": "ts-node src/main.ts",
     "dev": "nodemon",
+    "lint": "eslint \"src/**/*.{ts,js}\"",
+    "lint:fix": "eslint \"src/**/*.{ts,js}\" --fix",
     "prebuild": "rimraf dist",
     "build": "tsc",
     "test": "mocha -r ts-node/register test/*.test.ts"
@@ -26,12 +26,13 @@
     "@types/chai": "^4.2.21",
     "@types/mocha": "^9.0.0",
     "@types/node": "^16.7.4",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
     "chai": "^4.2.0",
-    "eslint": "^5.7.0",
+    "eslint": "^7.32.0",
     "eslint-plugin-mocha": "^6.3.0",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.4",
-    "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
     "ts-node": "^10.2.1",
     "typescript": "^4.4.2"

@@ -1,6 +1,6 @@
-import { generateMessageEmbed } from "../utils/anime"
-import * as winston from "winston"
-import * as core from "../core"
+import { generateMessageEmbed } from "../utils/anime";
+import * as winston from "winston";
+import * as core from "../core";
 
 export const cmd = {
   name: "search",
