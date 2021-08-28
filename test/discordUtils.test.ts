@@ -1,6 +1,9 @@
-const assert = require("chai").assert;
-const { prefix } = require("./../src/config/index");
-const discordUtils = require("./../src/utils/discord");
+// const assert = require("chai").assert;
+// const { prefix } = require("./../src/config/index");
+// const discordUtils = require("./../src/utils/discord");
+import {assert} from "chai"
+import {config} from "../src/config"
+import * as discordUtils from "../src/utils/discord"
 
 describe("discord utils test", () => {
   describe("validate message", () => {
@@ -26,7 +29,7 @@ describe("discord utils test", () => {
     });
 
     it("should succeed if message has prefix", () => {
-      const message = generateMessage(`${prefix} anime title`, false, "text");
+      const message = generateMessage(`${config.prefix} anime title`, false, "text");
 
       const actual = discordUtils.isValidMessage(message);
       assert.strictEqual(actual, true);
@@ -67,7 +70,7 @@ describe("discord utils test", () => {
     });
 
     it("should extract args from message", () => {
-      const message = generateMessage(`${prefix} help  anime`, false, "dm");
+      const message = generateMessage(`${config.prefix} help  anime`, false, "dm");
 
       const actual = discordUtils.extractArgs(message);
       assert.deepEqual(actual, ["help", "anime"]);

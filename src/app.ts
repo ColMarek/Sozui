@@ -1,9 +1,9 @@
-const fs = require("fs");
-const winston = require("winston");
-const Discord = require("discord.js");
-const { botToken } = require("./config");
-const discordUtils = require("./utils/discord");
-const core = require("./core");
+import * as fs from "fs"
+import * as winston from "winston"
+import * as Discord from "discord.js"
+import {config} from "./config"
+import * as discordUtils from "./utils/discord"
+import * as core from "./core"
 
 if (!fs.existsSync(__dirname + "/../logs")) {
   fs.mkdirSync(__dirname + "/../logs");
@@ -25,12 +25,14 @@ winston.configure({
 });
 
 const client = new Discord.Client();
+// @ts-ignore
 client.commands = new Discord.Collection();
 
 // Load command files
-const commandFiles = fs.readdirSync(__dirname + "/commands").filter(file => file.endsWith(".js"));
+const commandFiles = fs.readdirSync(__dirname + "/commands").filter(file => file.endsWith(".ts"));
 for (const file of commandFiles) {
-  const command = require(`./commands/${file}`);
+  const command = require(`./commands/${file}`).cmd;
+  // @ts-ignore
   client.commands.set(command.name, command);
 }
 
@@ -38,6 +40,7 @@ for (const file of commandFiles) {
  * Bot is initialized
  */
 client.on("ready", () => {
+  // @ts-ignore
   winston.info(`Logged in as ${client.user.tag}!`);
 });
 
@@ -79,4 +82,4 @@ client.on("message", async message => {
   }
 });
 
-client.login(botToken);
+client.login(config.botToken);

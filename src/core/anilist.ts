@@ -1,4 +1,4 @@
-const axios = require("axios").default;
+import {default as axios} from "axios"
 
 const BASE_URL = "https://graphql.anilist.co";
 
@@ -7,7 +7,7 @@ const BASE_URL = "https://graphql.anilist.co";
  * @param {String} title Anime title
  * @param {Number} count Number of results to return
  */
-async function searchAnime(title, count) {
+export async function searchAnime(title, count) {
   return searchMedia("ANIME", title, count);
 }
 
@@ -16,7 +16,7 @@ async function searchAnime(title, count) {
  * @param {String} title Manga title
  * @param {Number} count Number of results to return
  */
-async function searchManga(title, count) {
+export async function searchManga(title, count) {
   return searchMedia("MANGA", title, count);
 }
 
@@ -72,8 +72,3 @@ async function searchMedia(media, title, count) {
     throw new Error(message);
   }
 }
-
-module.exports = {
-  searchAnime,
-  searchManga
-};

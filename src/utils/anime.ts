@@ -1,6 +1,5 @@
-const Discord = require("discord.js");
-// eslint-disable-next-line no-unused-vars
-const Media = require("../models/Media");
+import * as Discord from "discord.js"
+import {Media} from "../models/Media"
 
 /**
  *
@@ -8,8 +7,8 @@ const Media = require("../models/Media");
  * @param {Media} media
  * @param {boolean} extended
  */
-function generateMessageEmbed(type, media, extended) {
-  const fields = [];
+export function generateMessageEmbed(type, media, extended) {
+  const fields: any[] = [];
   if (extended) {
     fields.push({
       name: "Mean Score",
@@ -54,6 +53,3 @@ function generateMessageEmbed(type, media, extended) {
   return embed;
 }
 
-module.exports = {
-  generateMessageEmbed
-};

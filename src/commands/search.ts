@@ -1,8 +1,8 @@
-const { generateMessageEmbed } = require("../utils/anime");
-const winston = require("winston");
-const core = require("../core");
+import { generateMessageEmbed } from "../utils/anime"
+import * as winston from "winston"
+import * as core from "../core"
 
-module.exports = {
+export const cmd = {
   name: "search",
   description: "Search for anime",
   aliases: ["c"],
@@ -11,7 +11,7 @@ module.exports = {
     const title = args.join(" ").replace(/"/gm, "");
     winston.debug(`Searching for '${title}'`);
     const results = await core.searchForTitle(title);
-    const data = [];
+    const data: string[] = [];
     for (let i = 0; i < results.length; i++) {
       const media = results[i];
       data.push(`${i + 1} ${media.title}`);

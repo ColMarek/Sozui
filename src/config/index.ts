@@ -1,6 +1,7 @@
-require("dotenv").config();
+import * as dotenv from "dotenv";
+dotenv.config();
 
-module.exports = {
+export const config = {
   botToken: process.env.DISCORD_BOT_TOKEN || "",
   prefix: process.env.DISCORD_BOT_PREFIX || "!sozui"
 };

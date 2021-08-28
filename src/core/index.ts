@@ -1,17 +1,16 @@
-const winston = require("winston");
-const { generateMessageEmbed } = require("../utils/anime");
-const discordUtils = require("../utils/discord");
-// eslint-disable-next-line no-unused-vars
-const Discord = require("discord.js");
-const anilist = require("./anilist");
-const Media = require("../models/Media");
+import * as winston from "winston"
+import {generateMessageEmbed} from "../utils/anime"
+import * as discordUtils from "../utils/discord"
+import * as Discord from "discord.js"
+import * as anilist from "./anilist"
+import { Media } from "../models/Media"
 
 /**
  * Check if a message contains a bracket link and handle if it does.
  * @param {Discord.Message} message
  * @returns {boolean} True if the message has been handled
  */
-async function checkAndHandleBracketsSearch(message) {
+export async function checkAndHandleBracketsSearch(message) {
   // Handle :{{anime title}}:
   const animeExtendedFound = message.content.match(discordUtils.animeExtendedRegex);
   if (animeExtendedFound) {
@@ -45,7 +44,7 @@ async function checkAndHandleBracketsSearch(message) {
  * @param query The user query
  * @returns {Promise<Media[]>}
  */
-async function searchForTitle(query) {
+export async function searchForTitle(query) {
   return (await anilist.searchAnime(query, 5)).map(a => new Media(
     a.title.romaji,
     a.coverImage.extraLarge,
@@ -170,8 +169,3 @@ async function searchAnilist(type, query) {
 
   return anime;
 }
-
-module.exports = {
-  checkAndHandleBracketsSearch,
-  searchForTitle
-};

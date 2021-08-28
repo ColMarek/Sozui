@@ -1,12 +1,12 @@
-const { prefix } = require("./../config");
+import {config} from "../config"
 
-module.exports = {
+export const cmd = {
   name: "help",
   description: "List all of my commands or info about a specific command.",
   aliases: ["commands"],
   usage: "<command name>",
   execute: async (message, args) => {
-    const data = [];
+    const data: string[] = [];
     const { commands } = message.client;
 
     if (!args.length) {
@@ -42,7 +42,7 @@ module.exports = {
     if (command.description) {
       data.push(`**Description:** ${command.description}`);
     }
-    data.push(`**Usage:** ${prefix} ${command.name} ${command.usage}`);
+    data.push(`**Usage:** ${config.prefix} ${command.name} ${command.usage}`);
 
     message.channel.send(data, { split: true });
   }

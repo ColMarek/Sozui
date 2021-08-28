@@ -1,13 +1,12 @@
-const winston = require("winston");
+import * as winston from "winston"
 
-const { prefix } = require("./../config");
+import {config} from "../config"
 
-module.exports = {
   /**
    * Checks that a message is in the valid format for
    * @param {*} message Discord.js message
    */
-  isValidMessage(message) {
+export function  isValidMessage(message) {
     // If message is by a bot, it's not valid
     if (message.author.bot) {
       return false;
@@ -19,7 +18,7 @@ module.exports = {
     }
 
     // If the message starts with the prefix, it's valid
-    if (message.content.startsWith(prefix)) {
+    if (message.content.startsWith(config.prefix)) {
       return true;
     }
 
@@ -44,22 +43,24 @@ module.exports = {
     }
 
     return false;
-  },
+  }
+
   /**
    * Extract arguments from a message by splitting at spaces
    * @param {*} message Discord.js message
    */
-  extractArgs(message) {
+  export function extractArgs(message) {
     // DMs don't need a prefix
-    if (!message.content.startsWith(prefix) && message.channel.type === "dm") {
+    if (!message.content.startsWith(config.prefix) && message.channel.type === "dm") {
       return message.content.split(/ +/);
     } else {
       return message.content
-        .slice(prefix.length) // Remove the prefix, then split at spaces.
+        .slice(config.prefix.length) // Remove the prefix, then split at spaces.
         .trim()
         .split(/ +/);
     }
-  },
+  }
+
   /**
    * Check that a command is valid by checking that it exists and it has arguments, if they
    * are required.
@@ -67,7 +68,7 @@ module.exports = {
    * @param {*} client Discord.js client
    * @param {*} message Discord.js message
    */
-  validateCommand(args, client, message) {
+  export function validateCommand(args, client, message) {
     // Use the first arg command name
     const commandName = args.shift().toLowerCase();
 
@@ -78,9 +79,9 @@ module.exports = {
     // Check if command exists
     if (!command) {
       winston.warn(`Unable to find command for '${commandName}'`);
-      const data = [];
+      const data: string[] = [];
       data.push(`${message.author} I could not find any command like '${commandName}'`);
-      data.push(`Try \`${prefix} help\``);
+      data.push(`Try \`${config.prefix} help\``);
       message.channel.send(data);
       return;
     }
@@ -90,7 +91,7 @@ module.exports = {
       let reply = `You didn't provide any arguments, ${message.author}!`;
 
       if (command.usage) {
-        reply += `\nThe proper usage would be: \`${prefix} ${command.name} ${command.usage}\``;
+        reply += `\nThe proper usage would be: \`${config.prefix} ${command.name} ${command.usage}\``;
       }
 
       message.channel.send(reply);
@@ -98,21 +99,25 @@ module.exports = {
     }
 
     return command;
-  },
+  }
+
   /**
    * :{anime title}:
    */
-  animeExtendedRegex: /:\{[^{](.*?)[^}]\}:/g,
+  export const animeExtendedRegex = /:\{[^{](.*?)[^}]\}:/g
+
   /**
    * :{{anime title}}:
    */
-  animeRegex: /:\{\{(.*?)\}\}:/g,
+  export const animeRegex = /:\{\{(.*?)\}\}:/g
+
   /**
    * :{{manga title}}:
    */
-  mangaExtendedRegex: /:<[^<](.*?)[^>]>:/g,
+  export const mangaExtendedRegex = /:<[^<](.*?)[^>]>:/g
+
   /**
    * :{manga title}:
    */
-  mangaRegex: /:<<(.*?)>>:/g
-};
+  export const mangaRegex = /:<<(.*?)>>:/g
+
