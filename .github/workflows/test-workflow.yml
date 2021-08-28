@@ -14,5 +14,5 @@ jobs:
         env:
           CI: true
         run: |
-          yarn install
-          yarn test
+          npm install
+          npm test
