@@ -1,12 +1,7 @@
 import * as Discord from "discord.js";
+import { Media } from "../models/Media";
 
-/**
- *
- * @param {string} type ANIME or MANGA
- * @param {Media} media
- * @param {boolean} extended
- */
-export function generateMessageEmbed(type, media, extended) {
+export function generateMessageEmbed(media: Media, extended: boolean) {
   const fields: any[] = [];
   if (extended) {
     fields.push({
@@ -35,7 +30,7 @@ export function generateMessageEmbed(type, media, extended) {
   let color = 0x0cca4a;
   if (media.isAdult) {
     color = 0xbf0909;
-  } else if (type == "MANGA") {
+  } else if (media.type == "MANGA") {
     color = 0x0c4ec9;
   }
 

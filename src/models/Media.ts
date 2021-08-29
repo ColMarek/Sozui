@@ -1,5 +1,10 @@
 import * as striptags from "striptags";
 
+export const enum MediaType {
+  ANIME  = "ANIME",
+  MANGA  = "MANGA"
+}
+
 export class Media {
   title: string
   image: string
@@ -14,6 +19,7 @@ export class Media {
   duration: string
   isAdult: string
   trailerUrl: string
+  type: MediaType
 
   constructor(
     title,
@@ -29,7 +35,8 @@ export class Media {
     duration,
     isAdult,
     trailerId,
-    trailerSite
+    trailerSite,
+    type
   ) {
     this.title = title;
     this.image = image;
@@ -48,5 +55,6 @@ export class Media {
     } else if (trailerSite == "dailymotion") {
       this.trailerUrl = `https://www.dailymotion.com/video/${trailerId}`;
     }
+    this.type = type;
   }
 }

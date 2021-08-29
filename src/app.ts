@@ -1,85 +1,68 @@
 import * as fs from "fs";
-import * as winston from "winston";
-import * as Discord from "discord.js";
+import * as path from "path";
 import { config } from "./config";
-import * as discordUtils from "./utils/discord";
-import * as core from "./core";
+import { Client, Collection, Intents } from "discord.js";
+import { initializeLogger, Logger } from "./Logger";
+import { EventHandler } from "./models/EventHandler";
+import { CommandHandler } from "./models/CommandHandler";
 
-if (!fs.existsSync(__dirname + "/../logs")) {
-  fs.mkdirSync(__dirname + "/../logs");
+initializeLogger();
+const logger = new Logger();
+const commands: Collection<string, CommandHandler> = new Collection();
+
+async function main() {
+  const client: Client = new Client({
+    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS]
+  });
+
+  // await setupCommands();
+  loadCommands();
+  loadEvents(client);
+
+  await client.login(config.botToken);
 }
 
-// Initialize logger
-const { combine, timestamp, printf } = winston.format;
-const customFormat = printf(info => `${info.timestamp} ${info.level}: ${info.message}`);
-winston.configure({
-  level: "debug",
-  format: combine(timestamp(), customFormat),
-  transports: [
-    new winston.transports.Console(),
-    new winston.transports.File({
-      filename: __dirname + "/../logs/combined.log",
-      format: combine(timestamp(), customFormat)
-    })
-  ]
-});
+function loadCommands() {
+  const commandFiles = fs.readdirSync(__dirname + "/commands").filter(file => file.endsWith(".ts"));
+  for (const file of commandFiles) {
+    const command: CommandHandler = require(`./commands/${file}`).cmd;
+    if (command === undefined) {
+      logger.error(`Command file ${file} does not export 'cmd' const`);
+      process.exit(1);
+    }
 
-const client = new Discord.Client();
-// @ts-expect-error: TODO Fixed with rewrite
-client.commands = new Discord.Collection();
+    commands.set(command.name, command);
+  }
 
-// Load command files
-const commandFiles = fs.readdirSync(__dirname + "/commands").filter(file => file.endsWith(".ts"));
-for (const file of commandFiles) {
-  const command = require(`./commands/${file}`).cmd;
-  // @ts-expect-error: TODO Fixed with rewrite
-  client.commands.set(command.name, command);
+  const commandNames = commands.map((c, k) => (k));
+  logger.info(`Loaded commands [${commandNames.join(",")}]`);
 }
 
-/**
- * Bot is initialized
- */
-client.on("ready", () => {
-  // @ts-expect-error: TODO Fixed with rewrite
-  winston.info(`Logged in as ${client.user.tag}!`);
-});
+function loadEvents(client: Client) {
+  const eventsDir = path.resolve(path.join(__dirname, "events"));
+  const eventFiles = fs.readdirSync(eventsDir).filter(file => file.endsWith(".ts"));
 
-/**
- * Handle messages
- */
-client.on("message", async message => {
-  // Check if the message is valid
-  if (!discordUtils.isValidMessage(message)) {
-    return;
+  if (commands.size == 0) {
+    logger.warn("No commands loaded");
   }
 
-  winston.info(
-    `${message.guild ? message.guild.name + " -> " : ""}` +
-      `${message.author.username}#${message.author.discriminator} -> ` +
-      message.content
-  );
+  const eventNames: string[] = [];
+  for (const file of eventFiles) {
+    const event: EventHandler = require(path.join(eventsDir, file)).event;
+    if (event === undefined) {
+      logger.error(`Event file ${file} does not export 'event' const`);
+      process.exit(1);
+    }
+    eventNames.push(event.name);
 
-  const handled = await core.checkAndHandleBracketsSearch(message);
-  if (handled) {
-    return;
-  }
-
-  // Handle a messages that uses the prefix
-  const args = discordUtils.extractArgs(message);
-  const command = discordUtils.validateCommand(args, client, message);
-  // If the command is valid
-  if (command) {
-    try {
-      await message.channel.startTyping();
-      await command.execute(message, args);
-      await message.react("✅");
-      message.channel.stopTyping(true);
-    } catch (error) {
-      message.channel.stopTyping();
-      winston.error(error);
-      await message.reply("There was an error trying to execute that command!");
+    if (event.once) {
+      client.once(event.name, (...args) => event.execute(client, commands, ...args));
+    } else {
+      client.on(event.name, (...args) => event.execute(client, commands, ...args));
     }
   }
-});
 
-client.login(config.botToken).catch(e => winston.error(e.message));
+  logger.info(`Loaded events [${eventNames.join(",")}]`);
+}
+
+main().catch(e => logger.error(e.message));

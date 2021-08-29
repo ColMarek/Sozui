@@ -6,7 +6,7 @@ module.exports = {
     commonjs: true,
     es6: true,
     node: true,
-    mocha: true
+    jest: true
   },
   parserOptions: {
     ecmaVersion: 2020,
@@ -54,6 +54,8 @@ module.exports = {
     ],
     "@typescript-eslint/type-annotation-spacing": "error",
     "space-before-blocks": "error",
+    "@typescript-eslint/require-await": "warn",
+    "@typescript-eslint/prefer-regexp-exec": "off",
 
     // TODO Fix issues related to these rules
     "@typescript-eslint/no-unsafe-call": "off",
