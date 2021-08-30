@@ -4,16 +4,31 @@ import * as path from "path";
 const LOG_DIR = path.resolve("./logs");
 
 export class Logger {
-  info(message: string) {
-    winston.info(message);
+  info(message: string, tag?: string) {
+    if (tag) {
+      winston.info(`[${tag}] ${message}`);
+    } else {
+      winston.info(message);
+    }
   }
 
-  warn(message: string) {
-    winston.warn(message);
+  warn(message: string, tag?: string) {
+    if (tag) {
+      winston.warn(`[${tag}] ${message}`);
+    } else {
+      winston.warn(message);
+    }
   }
 
-  error(message: string) {
-    winston.error(message);
+  error(message: string, error?: Error, tag?: string) {
+    if (tag) {
+      winston.error(`[${tag}] ${message}`);
+    } else {
+      winston.error(message);
+    }
+    if (error) {
+      winston.error(error.stack);
+    }
   }
 }
 

@@ -5,7 +5,21 @@ export const enum MediaType {
   MANGA  = "MANGA"
 }
 
+export class MediaTypeUtil {
+  static stringToMediaType(type: string): MediaType {
+    switch (type) {
+    case "ANIME":
+      return MediaType.ANIME;
+    case "MANGA":
+      return MediaType.ANIME;
+    default:
+      throw new Error(`Invalid media type ${type}`);
+    }
+  }
+}
+
 export class Media {
+  id: number
   title: string
   image: string
   description: string
@@ -22,6 +36,7 @@ export class Media {
   type: MediaType
 
   constructor(
+    id,
     title,
     image,
     description,
@@ -36,8 +51,9 @@ export class Media {
     isAdult,
     trailerId,
     trailerSite,
-    type
+    type: MediaType
   ) {
+    this.id = id;
     this.title = title;
     this.image = image;
     this.description = striptags(description);

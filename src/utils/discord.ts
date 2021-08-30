@@ -1,4 +1,4 @@
-import { CommandInteraction, Message } from "discord.js";
+import { ButtonInteraction, CommandInteraction, Message } from "discord.js";
 
 export const animeExtendedRegex = /:{[^{](.*?)[^}]}:/g; // :{anime title}:
 
@@ -29,7 +29,7 @@ export function isValidMessage(message: Message): boolean {
   }
 }
 
-export function createLogFromInteraction(interaction: CommandInteraction): string {
+export function createLogFromCommandInteraction(interaction: CommandInteraction): string {
   const guild = interaction.guild ? `${interaction.guild.name} -> ` : "";
   const user = `${interaction.user.tag} -> `;
   const command = `/${interaction.commandName}`;
@@ -37,6 +37,14 @@ export function createLogFromInteraction(interaction: CommandInteraction): strin
     interaction.options.data.map(d => `(${d.name}:${d.value})`) : "";
 
   return `${guild}${user}${command} ${options}`.trim();
+}
+
+export function createLogFromButtonInteraction(interaction: ButtonInteraction): string {
+  const guild = interaction.guild ? `${interaction.guild.name} -> ` : "";
+  const user = `${interaction.user.tag} -> `;
+  const id = `btn:${interaction.customId}`;
+
+  return `${guild}${user}${id}`.trim();
 }
 
 export function createLogFromMessage(message: Message): string {

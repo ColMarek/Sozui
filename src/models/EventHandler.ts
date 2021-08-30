@@ -1,4 +1,4 @@
-import { Client, Collection, CommandInteraction, Message } from "discord.js";
+import { ButtonInteraction, Client, Collection, CommandInteraction, Message } from "discord.js";
 import { CommandHandler } from "./CommandHandler";
 
 export interface EventHandler {
@@ -16,5 +16,5 @@ export interface MessageCreateEvent extends EventHandler {
 }
 
 export interface InteractionCreate extends EventHandler {
-  execute: (client: Client, commands: Collection<string, CommandHandler>, interaction: CommandInteraction) => void;
+  execute: (client: Client, commands: Collection<string, CommandHandler>, interaction: CommandInteraction | ButtonInteraction) => void;
 }

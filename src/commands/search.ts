@@ -1,6 +1,11 @@
-import { CommandInteraction } from "discord.js";
+import { CommandInteraction, MessageActionRow, MessageButton } from "discord.js";
 import { CommandHandler } from "../models/CommandHandler";
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { getMediaById, searchMedia } from "../core";
+import { MediaType } from "../models/Media";
+import { Logger } from "../Logger";
+
+const logger = new Logger();
 
 export const cmd: CommandHandler = {
   name: "search",
@@ -13,9 +18,36 @@ export const cmd: CommandHandler = {
     .addBooleanOption(opt => opt.setName("is-anime")
       .setDescription("True for anime, false for manga")),
   execute: async (interaction: CommandInteraction) => {
-    const isAnime = interaction.options.getBoolean("is-anime") ? interaction.options.getBoolean("is-anime") : false;
+    let isAnime = true;
+    if (interaction.options.getBoolean("is-anime") != null) {
+      isAnime = interaction.options.getBoolean("is-anime") as boolean;
+    }
     const query = interaction.options.getString("query") as string;
-    await interaction.reply(`${query}, ${isAnime}`);
+
+    try {
+      const mediaType = isAnime ? MediaType.ANIME : MediaType.MANGA;
+      const medias = await searchMedia(query, mediaType);
+      if (medias.length == 0) {
+        await interaction.reply(`No ${mediaType.toLowerCase()} results found for ${query}`);
+        return;
+      }
+
+      const numberedMediaTitles = medias.map((m, i) => `${i + 1} - ${m.title} (${m.startDate.split("-")[2]})`);
+
+      const row = new MessageActionRow();
+      for (let i = 0; i < medias.length; i++) {
+        const media = medias[i];
+        row.addComponents(new MessageButton()
+          .setCustomId(media.id.toString())
+          .setLabel((i + 1).toString())
+          .setStyle("SECONDARY"));
+      }
+
+      await interaction.reply({ content: numberedMediaTitles.join("\n"), components: [row] });
+    } catch (e) {
+      logger.error(e.message, e, "search");
+      await interaction.reply("There was an error while executing this command!");
+    }
   }
 
 };

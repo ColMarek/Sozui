@@ -48,6 +48,14 @@ export async function parseMessage(content: string): Promise<{ media: Media | un
   return result;
 }
 
+export async function searchMedia(title: string, type: MediaType): Promise<Media[]> {
+  return anilist.searchMedia(type, title, 5);
+}
+
+export async function getMediaById(id: number): Promise<Media | null> {
+  return anilist.getMediaById(id);
+}
+
 function stripTags(query: string): string {
   return query
     .replace(":{{", "")
