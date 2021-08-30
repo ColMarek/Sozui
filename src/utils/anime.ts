@@ -1,17 +1,18 @@
 import * as Discord from "discord.js";
 import { Media } from "../models/Media";
+import { EmbedFieldData } from "discord.js";
 
 export function generateMessageEmbed(media: Media, extended: boolean) {
-  const fields: any[] = [];
+  const fields: EmbedFieldData[] = [];
   if (extended) {
     fields.push({
       name: "Mean Score",
-      value: media.meanScore
+      value: media.meanScore.toString()
     });
     if (media.episodes) {
       fields.push({
         name: "Episodes",
-        value: media.episodes
+        value: media.episodes.toString()
       });
     }
     fields.push({ name: "Status", value: media.status, inline: true });
