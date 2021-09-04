@@ -21,13 +21,13 @@ export const event: MessageCreateEvent = {
 
       const result = await parseMessage(message.content);
 
-      const embeds = result
+      const discordRes = result
         .filter(r => r.media !== undefined)
         .map(r => generateMessageEmbed(r.media!, r.arg.extended));
 
       await message.channel.sendTyping();
-      for (const embed of embeds) {
-        await message.channel.send({ embeds: [embed] });
+      for (const res of discordRes) {
+        await message.channel.send({ embeds: [res.embed], components: [res.row] });
       }
 
       const missingSearches = result.filter(r => r.media === undefined)

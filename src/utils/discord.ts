@@ -1,6 +1,13 @@
-import { ButtonInteraction, CommandInteraction, EmbedFieldData, Message } from "discord.js";
+import {
+  ButtonInteraction,
+  CommandInteraction,
+  EmbedFieldData,
+  Message,
+  MessageEmbed,
+  MessageActionRow,
+  MessageButton
+} from "discord.js";
 import { Media } from "../models/Media";
-import * as Discord from "discord.js";
 
 export const animeExtendedRegex = /:{[^{](.*?)[^}]}:/g; // :{anime title}:
 
@@ -31,7 +38,7 @@ export function isValidMessage(message: Message): boolean {
   }
 }
 
-export function generateMessageEmbed(media: Media, extended: boolean) {
+export function generateMessageEmbed(media: Media, extended: boolean): { embed: MessageEmbed, row: MessageActionRow } {
   const fields: EmbedFieldData[] = [];
   if (extended) {
     fields.push({
@@ -64,7 +71,15 @@ export function generateMessageEmbed(media: Media, extended: boolean) {
     color = 0x0c4ec9;
   }
 
-  const embed = new Discord.MessageEmbed()
+  const row = new MessageActionRow();
+  if (media.trailerUrl) {
+    row.addComponents(new MessageButton()
+      .setURL(media.trailerUrl)
+      .setLabel("Trailer")
+      .setStyle("LINK"));
+  }
+
+  const embed = new MessageEmbed()
     .setColor(color)
     .setTitle(media.title)
     .setURL(media.anilistUrl)
@@ -74,7 +89,7 @@ export function generateMessageEmbed(media: Media, extended: boolean) {
     embed.setDescription(media.description);
   }
 
-  return embed;
+  return { embed, row };
 }
 
 export function createLogFromCommandInteraction(interaction: CommandInteraction): string {

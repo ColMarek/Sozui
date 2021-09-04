@@ -52,9 +52,9 @@ async function handleButton(interaction: ButtonInteraction) {
       return;
     }
 
-    const embed = generateMessageEmbed(media, true);
+    const { embed, row } = generateMessageEmbed(media, true);
 
-    await interaction.reply({ embeds: [embed] });
+    await interaction.reply({ embeds: [embed], components: [row] });
   } catch (error) {
     logger.error(error.message, undefined, "handleButton");
     await interaction.reply({ content: "There was an error handling that button!", ephemeral: true });
