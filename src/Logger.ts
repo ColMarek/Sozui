@@ -12,6 +12,14 @@ export class Logger {
     }
   }
 
+  debug(message: string, tag?: string) {
+    if (tag) {
+      winston.debug(`[${tag}] ${message}`);
+    } else {
+      winston.debug(message);
+    }
+  }
+
   warn(message: string, tag?: string) {
     if (tag) {
       winston.warn(`[${tag}] ${message}`);

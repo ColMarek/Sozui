@@ -5,6 +5,7 @@ import { Client, Collection, Intents } from "discord.js";
 import { initializeLogger, Logger } from "./Logger";
 import { EventHandler } from "./models/EventHandler";
 import { CommandHandler } from "./models/CommandHandler";
+import { setupCommands } from "./deploy-commands";
 
 initializeLogger();
 const logger = new Logger();
@@ -15,7 +16,9 @@ async function main() {
     intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS]
   });
 
-  // await setupCommands();
+  if (config.env === "production") {
+    await setupCommands();
+  }
   loadCommands();
   loadEvents(client);
 

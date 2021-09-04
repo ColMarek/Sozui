@@ -18,16 +18,34 @@ interface DeployedCommands {
   commands: RESTGetAPIApplicationGuildCommandsResult;
 }
 
+interface StaleCommand {
+  guild: string;
+  commandId: string;
+  commandName: string;
+}
+
 const logger = new Logger();
 
 const rest = new REST({ version: "9" }).setToken(config.botToken);
 
 export async function setupCommands() {
   await deployCommands();
-  // const localCommands = getLocalCommands();
-  // const deployedCommands = await getDeployedCommands();
 
-  // TODO Delete stale commands
+  const localCommands = getLocalCommands().map(c => c.name);
+  const deployedCommands = (await getDeployedCommands())
+    .map(c => ({ guild:c.guild, commands: c.commands.map(c2 => ({ id:c2.id, name:c2.name, }) ) }));
+
+  const staleCommands: StaleCommand[] = [];
+  for (const buildCommand of deployedCommands) {
+    for (const command of buildCommand.commands) {
+      if (localCommands.indexOf(command.name) === -1) {
+        staleCommands.push({ guild:buildCommand.guild, commandId: command.id, commandName: command.name });
+      }
+    }
+  }
+
+  logger.debug(`Found ${staleCommands.length} stale commands across ${deployedCommands.length} guilds`);
+  await deleteCommand(staleCommands);
 }
 
 export async function deployCommands() {
@@ -42,10 +60,21 @@ export async function deployCommands() {
       );
     }
 
-    logger.info("Successfully registered application commands.");
+    logger.debug("Successfully registered application commands.");
   } catch (error) {
     logger.error(error.message);
   }
+}
+
+async function deleteCommand(staleCommands: StaleCommand[]) {
+  const delP = staleCommands.map(c => {
+    logger.debug(`Deleting command ${c.commandName} from ${c.guild}`);
+    return rest.delete(
+      Routes.applicationGuildCommand(config.applicationId, c.guild, c.commandId)
+    );
+  });
+
+  await Promise.all(delP);
 }
 
 function getLocalCommands(): CommandJson[] {
