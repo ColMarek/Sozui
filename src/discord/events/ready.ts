@@ -1,6 +1,6 @@
-import { ReadyEvent } from "../models/EventHandler";
+import { ReadyEvent } from "../../models/EventHandler";
 import { Client } from "discord.js";
-import { Logger } from "../Logger";
+import { Logger } from "../../utils/Logger";
 
 const logger = new Logger();
 

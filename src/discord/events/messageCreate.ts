@@ -1,10 +1,9 @@
-import { MessageCreateEvent } from "../models/EventHandler";
-import { createLogFromMessage, isValidMessage } from "../utils/discord";
+import { MessageCreateEvent } from "../../models/EventHandler";
+import { createLogFromMessage, generateMessageEmbed, isValidMessage } from "../../utils/discord";
 import { Client, Collection, Message } from "discord.js";
-import { CommandHandler } from "../models/CommandHandler";
-import { Logger } from "../Logger";
-import { parseMessage } from "../core";
-import { generateMessageEmbed } from "../utils/anime";
+import { CommandHandler } from "../../models/CommandHandler";
+import { Logger } from "../../utils/Logger";
+import { parseMessage } from "../../core";
 
 const logger = new Logger();
 

@@ -1,6 +1,6 @@
 import { default as axios } from "axios";
 import { Media, MediaType, MediaTypeUtil } from "../models/Media";
-import { Logger } from "../Logger";
+import { Logger } from "../utils/Logger";
 
 const BASE_URL = "https://graphql.anilist.co";
 const logger = new Logger();

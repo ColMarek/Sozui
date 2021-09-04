@@ -1,13 +1,12 @@
-import { InteractionCreate } from "../models/EventHandler";
+import { InteractionCreate } from "../../models/EventHandler";
 import { ButtonInteraction, Client, Collection, CommandInteraction } from "discord.js";
-import { CommandHandler } from "../models/CommandHandler";
-import { Logger } from "../Logger";
-import { getMediaById } from "../core";
-import { generateMessageEmbed } from "../utils/anime";
+import { CommandHandler } from "../../models/CommandHandler";
+import { Logger } from "../../utils/Logger";
+import { getMediaById } from "../../core";
 import {
   createLogFromButtonInteraction,
-  createLogFromCommandInteraction,
-} from "../utils/discord";
+  createLogFromCommandInteraction, generateMessageEmbed
+} from "../../utils/discord";
 
 const logger = new Logger();
 

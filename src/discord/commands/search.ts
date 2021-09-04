@@ -1,9 +1,9 @@
 import { CommandInteraction, MessageActionRow, MessageButton } from "discord.js";
-import { CommandHandler } from "../models/CommandHandler";
+import { CommandHandler } from "../../models/CommandHandler";
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { getMediaById, searchMedia } from "../core";
-import { MediaType } from "../models/Media";
-import { Logger } from "../Logger";
+import { searchMedia } from "../../core";
+import { MediaType } from "../../models/Media";
+import { Logger } from "../../utils/Logger";
 
 const logger = new Logger();
 

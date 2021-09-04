@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { config } from "./config";
 import { Client, Collection, Intents } from "discord.js";
-import { initializeLogger, Logger } from "./Logger";
+import { initializeLogger, Logger } from "./utils/Logger";
 import { EventHandler } from "./models/EventHandler";
 import { CommandHandler } from "./models/CommandHandler";
 import { setupCommands } from "./deploy-commands";
@@ -26,9 +26,10 @@ async function main() {
 }
 
 function loadCommands() {
-  const commandFiles = fs.readdirSync(__dirname + "/commands").filter(file => file.endsWith(".ts"));
+  const commandsDir = path.resolve(path.join(__dirname, "discord/commands"));
+  const commandFiles = fs.readdirSync(commandsDir).filter(file => file.endsWith(".ts"));
   for (const file of commandFiles) {
-    const command: CommandHandler = require(`./commands/${file}`).cmd;
+    const command: CommandHandler = require(path.join(commandsDir, file)).cmd;
     if (command === undefined) {
       logger.error(`Command file ${file} does not export 'cmd' const`);
       process.exit(1);
@@ -42,7 +43,7 @@ function loadCommands() {
 }
 
 function loadEvents(client: Client) {
-  const eventsDir = path.resolve(path.join(__dirname, "events"));
+  const eventsDir = path.resolve(path.join(__dirname, "discord/events"));
   const eventFiles = fs.readdirSync(eventsDir).filter(file => file.endsWith(".ts"));
 
   if (commands.size == 0) {

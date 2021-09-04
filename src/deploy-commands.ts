@@ -4,7 +4,7 @@ import * as fs from "fs";
 import { config } from "./config";
 import * as path from "path";
 import { CommandHandler } from "./models/CommandHandler";
-import { Logger } from "./Logger";
+import { Logger } from "./utils/Logger";
 
 interface CommandJson {
   name: string;
@@ -79,7 +79,7 @@ async function deleteCommand(staleCommands: StaleCommand[]) {
 
 function getLocalCommands(): CommandJson[] {
   const commands: CommandJson[] = [];
-  const commandsDir = path.resolve(path.join(__dirname, "commands"));
+  const commandsDir = path.resolve(path.join(__dirname, "discord/commands"));
   const commandFiles = fs.readdirSync(commandsDir).filter(file => file.endsWith(".ts"));
 
   for (const file of commandFiles) {

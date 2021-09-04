@@ -15,4 +15,5 @@ jobs:
           CI: true
         run: |
           npm install
+          npm lint
           npm test

@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { CommandHandler } from "../models/CommandHandler";
+import { CommandHandler } from "../../models/CommandHandler";
 import { CommandInteraction } from "discord.js";
 
 export const cmd: CommandHandler = {

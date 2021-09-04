@@ -1,7 +1,7 @@
 import * as discordUtils from "./utils/discord";
 import * as anilist from "./anilist";
 import { Media, MediaType } from "./models/Media";
-import { Logger } from "./Logger";
+import { Logger } from "./utils/Logger";
 
 const logger = new Logger();
 
