@@ -1,7 +1,7 @@
 {
   "name": "sozui",
-  "version": "1.0.0",
-  "description": "A Discord bot for searching for anime.",
+  "version": "2.0.0",
+  "description": "A Discord bot for linking/searching for anime or manga.",
   "main": "src/app.js",
   "repository": "https://github.com/colmarek/sozui",
   "author": "ColMarek",
