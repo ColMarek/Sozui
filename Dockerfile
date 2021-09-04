@@ -1,11 +1,24 @@
-FROM node:14.0.0-alpine3.10
+FROM node:16.8.0-alpine3.13 as builder
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY package.json .
+COPY package.json package.json
+COPY package-lock.json package-lock.json
 
-RUN yarn
+RUN npm install
 
 COPY . .
 
-CMD [ "npm", "start" ]
+RUN npm run build
+
+RUN npm prune --production
+
+FROM node:16.8.0-alpine3.13
+
+WORKDIR /app
+
+COPY --from=builder /app/dist /app
+COPY --from=builder /app/package.json .
+COPY --from=builder /app/node_modules node_modules
+
+CMD [ "node", "app.js" ]

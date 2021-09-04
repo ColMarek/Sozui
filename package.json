@@ -1,31 +1,43 @@
 {
   "name": "sozui",
-  "version": "1.0.0",
-  "description": "A Discord bot for searching for anime.",
+  "version": "2.0.0",
+  "description": "A Discord bot for linking/searching for anime or manga.",
   "main": "src/app.js",
   "repository": "https://github.com/colmarek/sozui",
   "author": "ColMarek",
   "license": "MIT",
   "scripts": {
-    "format": "prettier --write \"src/**/*.js\"",
-    "lint": "eslint \"src/**/*.js\" --fix",
-    "start": "node ./src/app.js",
-    "dev": "nodemon ./src/app.js",
-    "test": "mocha"
+    "temp": "ts-node src/core.ts",
+    "start": "ts-node src/main.ts",
+    "dev": "nodemon",
+    "lint": "eslint \"src/**/*.{ts,js}\"",
+    "lint:fix": "eslint \"src/**/*.{ts,js}\" --fix",
+    "prebuild": "rimraf dist",
+    "build": "tsc",
+    "test": "jest"
   },
   "dependencies": {
-    "axios": "^0.18.1",
-    "discord.js": "12.2.0",
-    "dotenv": "^6.1.0",
-    "striptags": "^3.1.1",
-    "winston": "^3.1.0"
+    "@discordjs/builders": "^0.6.0",
+    "@discordjs/rest": "^0.1.0-canary.0",
+    "axios": "^0.21.1",
+    "discord-api-types": "^0.22.0",
+    "discord.js": "13.1.0",
+    "dotenv": "^10.0.0",
+    "striptags": "^3.2.0",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
-    "eslint": "^5.7.0",
-    "eslint-plugin-mocha": "^6.3.0",
-    "mocha": "^5.2.0",
-    "nodemon": "^1.18.4",
-    "prettier": "^2.0.5"
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.4",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
+    "eslint": "^7.32.0",
+    "eslint-plugin-mocha": "^9.0.0",
+    "jest": "^27.1.0",
+    "nodemon": "^2.0.12",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^27.0.5",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.2"
   }
 }
