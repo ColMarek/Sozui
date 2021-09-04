@@ -1,12 +1,12 @@
 # Sozui
 
 ![Test CI](https://github.com/ColMarek/sozui/workflows/test-workflow/badge.svg)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/17a474d963f14101b480b98fa25f8f40)](https://www.codacy.com/app/ColMarek/Sozui?utm_source=github.com&utm_medium=referral&utm_content=ColMarek/Sozui&utm_campaign=Badge_Grade)
-[![Known Vulnerabilities](https://snyk.io/test/github/ColMarek/Sozui/badge.svg?targetFile=package.json)](https://snyk.io/test/github/ColMarek/Sozui?targetFile=package.json)
 
 A Discord bot for anime/manga.
 
 ## Usage
+
+### Linking
 
 You can link anime/manga using:
 
@@ -16,39 +16,53 @@ Anime             ->  :{{anime title}}:
 Manga (detailed)  ->  :<manga title>:
 Manga             ->  :<<manga title>>:
 ```
-
-You can search for anime using:
-
-```
-!sozui search "Anime title"
-```
-
-Then click the corresponding reaction (emoji) number to post the anime's info.
-
-React with `📹` on a response within 5m of it being sent to post the trailer (if it has one).
+#### Detailed
 
 ![Detail](./img/detail.png)
 
+#### Mini
+
 ![Mini](./img/mini.png)
+
+### Searching
+
+You can search for anime using `/search`
+
+```
+# discord will auto-complete
+
+/search query: Black Clover is-anime: true
+```
 
 ![Search](./img/search.png)
 
 ## Commands
 
-Default prefix: `!sozui`
+```
+/info
 
-Use `!sozui help` to view a more updated list of commands.
+/help
 
-**NB:** In a DM message, you don't need a prefix.
+/search
+```
+## Setup
 
-### Search
+> Requires Node 16+ for discord.js 13
 
-`!sozui search "Anime title"`
+Install dependencies
 
-### Help
+```
+npm install
+```
 
-`!sozui help`
+Copy .env file
 
-### Info
+```
+cp .env.sample .env
+```
 
-`!sozui info`
+Run 
+
+```
+npm start
+```
