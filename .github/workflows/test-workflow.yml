@@ -10,10 +10,17 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: "14.0.0"
-      - name: test
+      - name: setup
         env:
-          CI: true
+          NODE_ENV: "production"
         run: |
           npm install
-          npm lint
-          npm test
+      - name: lint
+        run: |
+          npm run lint
+      - name: test
+        run: |
+          npm run test
+      - name: build
+        run: |
+          npm run build

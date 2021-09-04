@@ -27,7 +27,7 @@ async function main() {
 
 function loadCommands() {
   const commandsDir = path.resolve(path.join(__dirname, "discord/commands"));
-  const commandFiles = fs.readdirSync(commandsDir).filter(file => file.endsWith(".ts"));
+  const commandFiles = fs.readdirSync(commandsDir).filter(file => file.match(/.*(js|ts)$/));
   for (const file of commandFiles) {
     const command: CommandHandler = require(path.join(commandsDir, file)).cmd;
     if (command === undefined) {
@@ -44,7 +44,7 @@ function loadCommands() {
 
 function loadEvents(client: Client) {
   const eventsDir = path.resolve(path.join(__dirname, "discord/events"));
-  const eventFiles = fs.readdirSync(eventsDir).filter(file => file.endsWith(".ts"));
+  const eventFiles = fs.readdirSync(eventsDir).filter(file => file.match(/.*(js|ts)$/));
 
   if (commands.size == 0) {
     logger.warn("No commands loaded");

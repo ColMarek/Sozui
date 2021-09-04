@@ -80,7 +80,7 @@ async function deleteCommand(staleCommands: StaleCommand[]) {
 function getLocalCommands(): CommandJson[] {
   const commands: CommandJson[] = [];
   const commandsDir = path.resolve(path.join(__dirname, "discord/commands"));
-  const commandFiles = fs.readdirSync(commandsDir).filter(file => file.endsWith(".ts"));
+  const commandFiles = fs.readdirSync(commandsDir).filter(file => file.match(/.*(js|ts)$/));
 
   for (const file of commandFiles) {
     const command: CommandHandler = require(path.join(commandsDir, file)).cmd;
