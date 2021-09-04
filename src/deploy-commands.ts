@@ -44,7 +44,7 @@ export async function setupCommands() {
     }
   }
 
-  logger.debug(`Found ${staleCommands.length} stale commands across ${deployedCommands.length} guilds`);
+  logger.debug(`Found ${staleCommands.length} stale commands across ${deployedCommands.length} guilds`, "setupCommands");
   await deleteCommand(staleCommands);
 }
 
@@ -60,15 +60,15 @@ export async function deployCommands() {
       );
     }
 
-    logger.debug("Successfully registered application commands.");
+    logger.debug("Successfully registered application commands.", "deployCommands");
   } catch (error) {
-    logger.error(error.message);
+    logger.error(error.message, undefined, "deployCommands");
   }
 }
 
 async function deleteCommand(staleCommands: StaleCommand[]) {
   const delP = staleCommands.map(c => {
-    logger.debug(`Deleting command ${c.commandName} from ${c.guild}`);
+    logger.debug(`Deleting command ${c.commandName} from ${c.guild}`, "deleteCommand");
     return rest.delete(
       Routes.applicationGuildCommand(config.applicationId, c.guild, c.commandId)
     );

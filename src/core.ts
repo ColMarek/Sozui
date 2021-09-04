@@ -35,7 +35,7 @@ export function extractArgs(content: string): SearchArg[] {
 
 export async function parseMessage(content: string): Promise<{ media: Media | undefined, arg: SearchArg }[]> {
   const args = extractArgs(content);
-  logger.info(`Extracted [${args.map(a => a.title).join(",")}] searches`);
+  logger.debug(`Extracted [${args.map(a => a.title).join(",")}] searches`, "parseMessage");
 
   const result: { media: Media, arg: SearchArg }[] = [];
   for (const arg of args) {

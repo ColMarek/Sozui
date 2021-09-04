@@ -18,7 +18,7 @@ export const event: MessageCreateEvent = {
       }
 
       const log = createLogFromMessage(message);
-      logger.info(log);
+      logger.info(log, "messageCreate");
 
       const result = await parseMessage(message.content);
 
@@ -38,7 +38,7 @@ export const event: MessageCreateEvent = {
       }
 
     } catch (e) {
-      logger.error(e.message, e);
+      logger.error(e.message, e, "messageCreate");
       await message.reply("There was an error responding!");
     }
   }

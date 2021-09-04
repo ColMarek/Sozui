@@ -30,29 +30,34 @@ async function handleCommand(interaction: CommandInteraction, commands: Collecti
   const command = commands.get(interaction.commandName);
 
   if (!command) {
-    logger.error(`Command not found for ${interaction.commandName}`);
+    logger.error(`Command not found for ${interaction.commandName}`, undefined, "handleCommand");
     return;
   }
 
   try {
     await command.execute(interaction);
   } catch (error) {
-    logger.error(error.message);
+    logger.error(error.message, undefined, "handleCommand");
     await interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
   }
 }
 
 async function handleButton(interaction: ButtonInteraction) {
-  const msg = createLogFromButtonInteraction(interaction);
-  logger.info(msg, "handleButton");
+  try {
+    const msg = createLogFromButtonInteraction(interaction);
+    logger.info(msg, "handleButton");
 
-  const media = await getMediaById(parseInt(interaction.customId));
-  if (media == null) {
-    await interaction.reply("Response was unexpectedly null");
-    return;
+    const media = await getMediaById(parseInt(interaction.customId));
+    if (media == null) {
+      await interaction.reply("Response was unexpectedly null");
+      return;
+    }
+
+    const embed = generateMessageEmbed(media, true);
+
+    await interaction.reply({ embeds: [embed] });
+  } catch (error) {
+    logger.error(error.message, undefined, "handleButton");
+    await interaction.reply({ content: "There was an error handling that button!", ephemeral: true });
   }
-
-  const embed = generateMessageEmbed(media, true);
-
-  await interaction.reply({ embeds: [embed] });
 }

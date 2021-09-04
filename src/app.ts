@@ -38,7 +38,7 @@ function loadCommands() {
   }
 
   const commandNames = commands.map((c, k) => (k));
-  logger.info(`Loaded commands [${commandNames.join(",")}]`);
+  logger.debug(`Loaded commands [${commandNames.join(",")}]`, "loadCommands");
 }
 
 function loadEvents(client: Client) {
@@ -65,7 +65,7 @@ function loadEvents(client: Client) {
     }
   }
 
-  logger.info(`Loaded events [${eventNames.join(",")}]`);
+  logger.debug(`Loaded events [${eventNames.join(",")}]`, "loadEvents");
 }
 
 main().catch(e => logger.error(e.message));

@@ -54,14 +54,14 @@ export async function searchMedia(type: MediaType, title: string, count: number)
   ${mediaData}`;
 
   try {
-    logger.info(`Searching for ${type} ${title}`, "searchMedia");
+    logger.debug(`Searching for ${type} ${title}`, "searchMedia");
     const response = await axios.post(BASE_URL, { query });
     const media = response.data.data.Page.media;
     if (media.length > 0) {
-      logger.info(`Found ${media.title}`);
+      logger.debug(`Found [${media.map(r => r.title.romaji).join(",")}]`, "searchMedia");
       return media.map(a => anilistResponseToMedia(a, type));
     } else {
-      logger.info(`Found 0 results for ${title} ${type}`, "searchMedia");
+      logger.debug(`Found 0 results for ${title} ${type}`, "searchMedia");
       return [];
     }
   } catch (e) {
@@ -81,10 +81,10 @@ export async function getMediaById(id: number): Promise<Media | null> {
   ${mediaData}`;
 
   try {
-    logger.info(`Getting for media ${id}`, "getMediaById");
+    logger.debug(`Getting for media ${id}`, "getMediaById");
     const response = await axios.post(BASE_URL, { query });
     const res = response.data.data.Media;
-    logger.info(`Found ${res.type} ${res.title.romaji}`, "getMediaById");
+    logger.debug(`Found ${res.type} ${res.title.romaji}`, "getMediaById");
     return anilistResponseToMedia(res, MediaTypeUtil.stringToMediaType(res.type));
   } catch (e) {
     if (e.response?.data.errors[0].message == "Not Found.") {
