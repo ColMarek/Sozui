@@ -27,7 +27,11 @@ export const event: MessageCreateEvent = {
 
       await message.channel.sendTyping();
       for (const res of discordRes) {
-        await message.channel.send({ embeds: [res.embed], components: [res.row] });
+        if (res.row !== null) {
+          await message.channel.send({ embeds: [res.embed], components: [res.row] });
+        } else {
+          await message.channel.send({ embeds: [res.embed] });
+        }
       }
 
       const missingSearches = result.filter(r => r.media === undefined)

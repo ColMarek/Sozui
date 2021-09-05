@@ -53,10 +53,15 @@ async function handleButton(interaction: ButtonInteraction) {
     }
 
     const { embed, row } = generateMessageEmbed(media, true);
+    logger.debug(`Generated embed and row for ${media.id}`);
 
-    await interaction.reply({ embeds: [embed], components: [row] });
+    if (row !== null) {
+      await interaction.reply({ embeds: [embed], components: [row] });
+    } else {
+      await interaction.reply({ embeds: [embed] });
+    }
   } catch (error) {
-    logger.error(error.message, undefined, "handleButton");
+    logger.error(error.message, error, "handleButton");
     await interaction.reply({ content: "There was an error handling that button!", ephemeral: true });
   }
 }

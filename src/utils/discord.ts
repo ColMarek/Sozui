@@ -38,7 +38,7 @@ export function isValidMessage(message: Message): boolean {
   }
 }
 
-export function generateMessageEmbed(media: Media, extended: boolean): { embed: MessageEmbed, row: MessageActionRow } {
+export function generateMessageEmbed(media: Media, extended: boolean): { embed: MessageEmbed, row: MessageActionRow|null } {
   const fields: EmbedFieldData[] = [];
   if (extended) {
     fields.push({
@@ -89,7 +89,7 @@ export function generateMessageEmbed(media: Media, extended: boolean): { embed: 
     embed.setDescription(media.description);
   }
 
-  return { embed, row };
+  return { embed, row: row.components.length > 0 ? row : null };
 }
 
 export function createLogFromCommandInteraction(interaction: CommandInteraction): string {
