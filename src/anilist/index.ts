@@ -105,8 +105,8 @@ function anilistResponseToMedia(res, type: MediaType): Media {
     res.meanScore,
     res.siteUrl,
     res.status,
-    `${res.startDate.day}-${res.startDate.month}-${res.startDate.year}`,
-    `${res.endDate.day}-${res.endDate.month}-${res.endDate.year}`,
+    parseDate(res.startDate.day, res.startDate.month, res.startDate.year),
+    parseDate(res.endDate.day,res.endDate.month, res.endDate.year),
     res.episodes,
     res.duration,
     res.isAdult,
@@ -114,3 +114,20 @@ function anilistResponseToMedia(res, type: MediaType): Media {
     res.trailer ? res.trailer.site : null,
     type);
 }
+
+function parseDate(day, month, year) {
+  let date = "";
+  if (day && month) {
+    date = `${day}-${month}`;
+  }
+  if (year) {
+    if (date.length > 0) {
+      date = `${date}-${year}`;
+    } else {
+      date = year;
+    }
+  }
+
+  return date === "" ? null : date;
+}
+

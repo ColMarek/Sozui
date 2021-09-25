@@ -41,25 +41,37 @@ export function isValidMessage(message: Message): boolean {
 export function generateMessageEmbed(media: Media, extended: boolean): { embed: MessageEmbed, row: MessageActionRow|null } {
   const fields: EmbedFieldData[] = [];
   if (extended) {
-    fields.push({
-      name: "Mean Score",
-      value: media.meanScore.toString()
-    });
+    if (media.meanScore) {
+      fields.push({
+        name: "Mean Score",
+        value: media.meanScore.toString()
+      });
+    }
+
     if (media.episodes) {
       fields.push({
         name: "Episodes",
         value: media.episodes.toString()
       });
     }
+
     fields.push({ name: "Status", value: media.status, inline: true });
-    fields.push({ name: "Start Date", value: media.startDate, inline: true });
-    if (!media.endDate.match(/.*null.*/g)) {
-      fields.push({ name: "End Date", value: media.endDate, inline: true });
+
+    if (media.startDate) {
+      fields.push({ name: "Start Date", value: media.startDate, inline: true });
+    }
+
+    if (media.endDate) {
+      if (!media.endDate.match(/.*null.*/g)) {
+        fields.push({ name: "End Date", value: media.endDate, inline: true });
+      }
     }
   }
+
   if (media.genres) {
     fields.push({ name: "Genres", value: media.genres, inline: false });
   }
+
   if (media.isAdult) {
     fields.push({ name: "NSFW", value: "true", inline: false });
   }
