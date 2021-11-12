@@ -62,9 +62,7 @@ export function generateMessageEmbed(media: Media, extended: boolean): { embed: 
     }
 
     if (media.endDate) {
-      if (!media.endDate.match(/.*null.*/g)) {
-        fields.push({ name: "End Date", value: media.endDate, inline: true });
-      }
+      fields.push({ name: "End Date", value: media.endDate, inline: true });
     }
   }
 

@@ -128,6 +128,6 @@ function parseDate(day, month, year) {
     }
   }
 
-  return date === "" ? null : date;
+  return date === "" ? null : date.toString();
 }
 
