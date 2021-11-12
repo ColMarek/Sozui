@@ -45,6 +45,7 @@ export const cmd: CommandHandler = {
 
         return line;
       });
+      const message = `These are the results for '${query}':\n${numberedMediaTitles.join("\n")}`;
 
       const row = new MessageActionRow();
       for (let i = 0; i < medias.length; i++) {
@@ -55,7 +56,7 @@ export const cmd: CommandHandler = {
           .setStyle("SECONDARY"));
       }
 
-      await interaction.reply({ content: numberedMediaTitles.join("\n"), components: [row] });
+      await interaction.reply({ content: message, components: [row] });
     } catch (e) {
       logger.error(e.message, e, "search");
       await interaction.reply("There was an error while executing this command!");
