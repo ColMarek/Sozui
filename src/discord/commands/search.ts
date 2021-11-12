@@ -32,7 +32,19 @@ export const cmd: CommandHandler = {
         return;
       }
 
-      const numberedMediaTitles = medias.map((m, i) => `${i + 1} - ${m.title} (${m.startDate.split("-")[2]})`);
+      const numberedMediaTitles = medias.map((m, i) => {
+        let line =  `${i + 1} - ${m.title}`;
+
+        if (m.startDate) {
+          if (m.startDate.match(/\d+-\d+-\d{4}/)) {
+            line += ` (${m.startDate.split("-")[2]})`;
+          } else {
+            line += ` (${m.startDate})`;
+          }
+        }
+
+        return line;
+      });
 
       const row = new MessageActionRow();
       for (let i = 0; i < medias.length; i++) {
