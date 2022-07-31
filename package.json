@@ -18,10 +18,10 @@
   },
   "dependencies": {
     "@discordjs/builders": "^0.6.0",
-    "@discordjs/rest": "^0.1.0-canary.0",
+    "@discordjs/rest": "^0.5.0",
     "axios": "^0.21.1",
     "discord-api-types": "^0.22.0",
-    "discord.js": "13.1.0",
+    "discord.js": "14.0.0",
     "dotenv": "^10.0.0",
     "striptags": "^3.2.0",
     "winston": "^3.3.3"
